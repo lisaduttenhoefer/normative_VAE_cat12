@@ -1,0 +1,6 @@
+Processing subject: IXI170-Guys-0843-T1 (Task ID 1)
+Starting post-segmentation processing...
+INPUT thickness file: /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/surf/lh.thickness.IXI170-Guys-0843-T1
+OUTPUT target folder: /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI170-Guys-0843-T1
+Processing FAILED for subject: IXI170-Guys-0843-T1
+Check log file: /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/output/logs/post_seg_IXI170-Guys-0843-T1.log
