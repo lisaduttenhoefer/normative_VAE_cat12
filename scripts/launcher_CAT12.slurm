@@ -2,7 +2,7 @@
 ### Job Parameters
 #SBATCH --job-name=cat12_post_segmentation
 #SBATCH --mail-user=lisa.duttenhoefer@stud.uni-heidelberg.de
-#SBATCH --mail-type=END,FAIL
+
 #SBATCH --output=/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/output/logs/slurm_post_seg_%A_%a.out
 #SBATCH --error=/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/output/logs/slurm_post_seg_%A_%a.err
 #SBATCH --time=48:00:00

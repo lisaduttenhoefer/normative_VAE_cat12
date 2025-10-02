@@ -1,0 +1,148 @@
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2022 The MathWorks, Inc.
+                  R2022a (9.12.0.1884302) 64-bit (glnxa64)
+                             February 16, 2022
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+Processing subject: /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI196-Guys-0805-T1.nii
+Output directory: /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1
+Item extopts: No field(s) named
+print
+Item output: No field(s) named
+atlases
+
+
+------------------------------------------------------------------------
+02-Oct-2025 18:37:16 - Running job #1
+------------------------------------------------------------------------
+02-Oct-2025 18:37:16 - Running 'CAT12: Segmentation'
+
+------------------------------------------------------------------------
+CAT12.9 r2577: 1/1:     ./stumrani/mri_prep/ixinii/IXI196-Guys-0805-T1.n
+------------------------------------------------------------------------
+SANLM denoising (medium)                                             34s
+Affine preprocessing (APP)                                        
+  Initialize                                                          6s
+  Estimate background                                                11s
+  Initial correction                                                  8s
+  Refine background                                                   4s
+  Final correction                                                    6s
+  Final scaling                                                       7s
+                                                                     48s
+Correct center-of-mass                                                9s
+Affine registration                                                  12s
+SPM preprocessing 1 (estimate 1 - TPM registration):                 64s
+SPM preprocessing 1 (estimate 2):                                    58s
+SPM preprocessing 2 (write)                                       
+  Write Segmentation                                                 18s
+  Update Segmentation                                                13s
+  Update Skull-Stripping                                             34s
+  Update probability maps                                             6s
+                                                                     71s
+Global intensity correction                                          13s
+SANLM denoising after intensity normalization (medium)               12s
+Fast Optimized Shooting registration                                  3s
+   47s
+Local adaptive segmentation (LASstr=0.50)                         
+  Prepare maps                                                        3s
+  Prepare partitions                                                  2s
+  Prepare segments (LASmod = 1.00)                                   12s
+  Estimate local tissue thresholds (WM)                              20s
+  Estimate local tissue thresholds (GM)                              23s
+  Intensity transformation                                            0s
+  SANLM denoising after LAS (medium)                                 17s
+                                                                     79s
+ROI segmentation (partitioning)                                   
+  Atlas -> subject space                                              6s
+  Major structures                                                    9s
+  Ventricle detection                                                 8s
+  Blood vessel detection                                              7s
+  WMH detection (WMHCstr=0.49 > WMHCstr'=0.17)                       15s
+  Manual stroke lesion detection                                      0s
+  Closing of deep structures                                          1s
+  Side alignment                                                      2s
+  Final corrections                                                   2s
+                                                                     51s
+Apply enhanced blood vessel correction                                1s
+Amap using initial SPM12 segmentations (MRF filter strength 0.06)    28s
+    AMAP peaks: [CSF,GM,WM] = [0.36±0.06,0.67±0.07,0.98±0.05]
+Final cleanup (gcutstr=0.24)                                      
+  Level 1 cleanup (ROI estimation)                                    3s
+  Level 1 cleanup (brain masking)                                     3s
+  Level 2 cleanup (CSF correction)                                    1s
+  Level 3 cleanup (CSF/WM PVE)                                        2s
+                                                                      9s
+    2s
+Write result maps                                                     7s
+Surface and thickness estimation                                  
+lh:
+  Thickness estimation (0.50 mm³)                                    92s
+  Create initial surface                                             72s
+  Topology correction:                                               65s
+  Surface refinement:                                                77s
+  Reduction of surface collisions with optimization:                 53s
+  Spherical mapping with areal smoothing                             62s
+  Spherical registration                                            245s
+rh:
+  Thickness estimation (0.50 mm³)                                    93s
+  Create initial surface                                             71s
+  Topology correction:                                               64s
+  Surface refinement:                                                58s
+  Reduction of surface collisions with optimization:                 51s
+  Spherical mapping with areal smoothing                             61s
+  Spherical registration                                            238s
+Final surface processing results: 
+  Average thickness:                          2.5819 ± 0.6394 mm
+  Euler characteristic / defect size:         14 / 0.48%
+  Display thickness:          /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/surf/lh.thickness.IXI196-Guys-0805-T1
+  Display thickness:          /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/surf/rh.thickness.IXI196-Guys-0805-T1
+  Show surfaces in orthview:  /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI196-Guys-0805-T1.nii
+Surface and thickness estimation takes                             1390s
+ROI estimation                                                    
+  ROI estimation of 'thalamic_nuclei' atlas                           2s
+  ROI estimation of 'cobra' atlas                                     7s
+  ROI estimation of 'neuromorphometrics' atlas                       25s
+  ROI estimation of 'lpba40' atlas                                    7s
+  ROI estimation of 'thalamus' atlas                                  2s
+  ROI estimation of 'suit' atlas                                      4s
+  Write results                                                       5s
+                                                                     47s
+Quality check                                                         6s
+
+------------------------------------------------------------------------
+CAT preprocessing takes 36 minute(s) and 50 second(s).
+Image Quality Rating (IQR):  86.01% (B)
+Segmentations are saved in /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/mri
+Reports are saved in /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/report
+Labels are saved in /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/label
+------------------------------------------------------------------------
+
+  Remove "/net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/report/catreport_IXI196-Guys-0805-T1.pdf" from dependency list because it does not exist!
+One or multiple files do not exist and were removed from the dependency list 
+and following batches will may not work correctly!
+
+  Remove "/net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/report/catreportj_IXI196-Guys-0805-T1.jpg" from dependency list because it does not exist!
+One or multiple files do not exist and were removed from the dependency list 
+and following batches will may not work correctly!
+
+02-Oct-2025 19:14:09 - Done    'CAT12: Segmentation'
+02-Oct-2025 19:14:09 - Done
+
+CAT12 processing completed successfully
+
+=== Starting data extraction ===
+Quality measures extracted
+Thickness extracted
+Gyrification extracted
+Extracted neuromorphometrics atlas (136 regions)
+Extracted lpba40 atlas (56 regions)
+Extracted cobra atlas (52 regions)
+Warning: Atlas aparc_DK40 not found in XML
+Extracted suit atlas (28 regions)
+Results saved to: /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/IXI196-Guys-0805-T1_cat12_results.csv
+
+=== CAT12 surface analysis and ROI extraction completed successfully ===
