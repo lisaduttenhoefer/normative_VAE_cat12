@@ -17,9 +17,16 @@ end
 fprintf('Processing subject: %s\n', subject_path);
 fprintf('Output directory: %s\n', output_root);
 
-% Prepare CAT12 batch
+% Copy input file directly to output_root (not a subdirectory)
+[~, subject_filename, ext] = fileparts(subject_path);
+local_input = fullfile(output_root, [subject_filename, ext]);
+copyfile(subject_path, local_input);
+
+% =========================================================================
+% BATCH 1: CAT12 SEGMENTATION
+% =========================================================================
 matlabbatch = {};
-matlabbatch{1}.spm.tools.cat.estwrite.data{1} = subject_path;
+matlabbatch{1}.spm.tools.cat.estwrite.data{1} = local_input;
 
 % CAT12 options
 matlabbatch{1}.spm.tools.cat.estwrite.nproc = 1;
@@ -34,12 +41,8 @@ matlabbatch{1}.spm.tools.cat.estwrite.extopts.registration.shooting.shootingtpm 
 matlabbatch{1}.spm.tools.cat.estwrite.extopts.registration.shooting.regstr = 0.5;
 matlabbatch{1}.spm.tools.cat.estwrite.extopts.vox = 1.5;
 
-% QC Report Generation
-matlabbatch{1}.spm.tools.cat.estwrite.extopts.print = 2;
-
-% Surface outputs - für DK Thickness & Gyrification
+% Surface outputs
 matlabbatch{1}.spm.tools.cat.estwrite.output.surface = 1;
-matlabbatch{1}.spm.tools.cat.estwrite.output.surf_measures = 1;
 
 % Volume outputs
 matlabbatch{1}.spm.tools.cat.estwrite.output.GM.native = 1;
@@ -66,23 +69,26 @@ matlabbatch{1}.spm.tools.cat.estwrite.output.jacobianwarped = 0;
 % Deformation fields
 matlabbatch{1}.spm.tools.cat.estwrite.output.warps = [1 0];
 
-% CRITICAL: Aktiviere alle gewünschten Atlanten
-matlabbatch{1}.spm.tools.cat.estwrite.output.atlases.neuromorphometrics = 1;
-matlabbatch{1}.spm.tools.cat.estwrite.output.atlases.lpba40 = 1;
-matlabbatch{1}.spm.tools.cat.estwrite.output.atlases.cobra = 1;
-matlabbatch{1}.spm.tools.cat.estwrite.output.atlases.hammers = 1;
-matlabbatch{1}.spm.tools.cat.estwrite.output.atlases.ibsr = 1;
-matlabbatch{1}.spm.tools.cat.estwrite.output.atlases.aal3 = 1;
-matlabbatch{1}.spm.tools.cat.estwrite.output.atlases.mori = 1;
-matlabbatch{1}.spm.tools.cat.estwrite.output.atlases.anatomy3 = 1;
-matlabbatch{1}.spm.tools.cat.estwrite.output.atlases.julichbrain = 1;
-matlabbatch{1}.spm.tools.cat.estwrite.output.atlases.Schaefer2018_100Parcels_17Networks_order = 1;
-matlabbatch{1}.spm.tools.cat.estwrite.output.atlases.Schaefer2018_200Parcels_17Networks_order = 1;
-matlabbatch{1}.spm.tools.cat.estwrite.output.atlases.Schaefer2018_400Parcels_17Networks_order = 1;
-matlabbatch{1}.spm.tools.cat.estwrite.output.atlases.Schaefer2018_600Parcels_17Networks_order = 1;
-matlabbatch{1}.spm.tools.cat.estwrite.output.atlases.ownatlas = {''};
+% Nur die gewünschten Atlanten aktivieren
+matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.neuromorphometrics = 1;
+matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.lpba40 = 1;
+matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.cobra = 1;
+matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.hammers = 0;
+matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.ibsr = 0;
+matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.thalamus = 0;
+matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.ownatlas = {''};
 
-% Run CAT12
+% =========================================================================
+% BATCH 2: EXTRACT SURFACE MEASURES (GYRIFICATION, etc.)
+% =========================================================================
+% Use dependency to get left central surface from batch 1
+matlabbatch{2}.spm.tools.cat.stools.surfextract.data_surf(1) = cfg_dep('CAT12: Segmentation: Left Central Surface', substruct('.','val', '{}',{1}, '.','val', '{}',{1}, '.','val', '{}',{1}, '.','val', '{}',{1}), substruct('()',{1}, '.','lhcentral', '()',{':'}));
+matlabbatch{2}.spm.tools.cat.stools.surfextract.GI = 1;  % Gyrification Index
+matlabbatch{2}.spm.tools.cat.stools.surfextract.SD = 1;  % Sulcus Depth
+matlabbatch{2}.spm.tools.cat.stools.surfextract.FD = 0;  % Fractal Dimension
+matlabbatch{2}.spm.tools.cat.stools.surfextract.nproc = 0;
+
+% Run CAT12 segmentation + surface extraction
 try
     spm_jobman('run', matlabbatch);
     fprintf('CAT12 processing completed successfully\n');
@@ -93,15 +99,82 @@ catch ME
 end
 
 % =========================================================================
+% SURFACE ROI EXTRACTION
+% =========================================================================
+fprintf('\n=== Running surface ROI extraction ===\n');
+
+% CAT12 creates subdirectories in the same location as the input file
+surf_dir = fullfile(output_root, 'surf');
+label_dir = fullfile(output_root, 'label');
+report_dir = fullfile(output_root, 'report');
+
+% Check if thickness files exist
+lh_thick = fullfile(surf_dir, ['lh.thickness.', subject_filename]);
+rh_thick = fullfile(surf_dir, ['rh.thickness.', subject_filename]);
+
+if exist(lh_thick, 'file') && exist(rh_thick, 'file')
+    % Define which surface atlases to use
+    atlas_dir = '/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/atlases_surfaces';
+    
+    surf_job = struct();
+    surf_job.verb = 1;
+    
+    % Thickness data
+    surf_job.cdata{1} = {lh_thick};
+    surf_job.cdata{2} = {rh_thick};
+    
+    % Define atlases (DK40 and Destrieux)
+    surf_job.rdata = {
+        fullfile(atlas_dir, 'lh.aparc_DK40.freesurfer.annot');
+        fullfile(atlas_dir, 'lh.aparc_a2009s.freesurfer.annot');
+    };
+    
+    try
+        cat_surf_surf2roi(surf_job);
+        fprintf('Surface ROI extraction for thickness completed\n');
+    catch ME
+        fprintf('Warning: Surface ROI extraction for thickness failed: %s\n', ME.message);
+        disp(getReport(ME));
+    end
+    
+    % Now do gyrification
+    lh_gyri = fullfile(surf_dir, ['lh.gyrification.', subject_filename]);
+    rh_gyri = fullfile(surf_dir, ['rh.gyrification.', subject_filename]);
+    
+    if exist(lh_gyri, 'file') && exist(rh_gyri, 'file')
+        surf_job_gyri = struct();
+        surf_job_gyri.verb = 1;
+        
+        % Gyrification data
+        surf_job_gyri.cdata{1} = {lh_gyri};
+        surf_job_gyri.cdata{2} = {rh_gyri};
+        
+        % Same atlases
+        surf_job_gyri.rdata = {
+            fullfile(atlas_dir, 'lh.aparc_DK40.freesurfer.annot');
+            fullfile(atlas_dir, 'lh.aparc_a2009s.freesurfer.annot');
+        };
+        
+        try
+            cat_surf_surf2roi(surf_job_gyri);
+            fprintf('Surface ROI extraction for gyrification completed\n');
+        catch ME
+            fprintf('Warning: Surface ROI extraction for gyrification failed: %s\n', ME.message);
+            disp(getReport(ME));
+        end
+    else
+        fprintf('Warning: Gyrification files not found\n');
+        fprintf('Expected: %s\n', lh_gyri);
+    end
+else
+    fprintf('Warning: Thickness files not found at expected location\n');
+    fprintf('Expected: %s\n', lh_thick);
+end
+
+% =========================================================================
 % POST-PROCESSING: Extract all metrics
 % =========================================================================
 fprintf('\n=== Starting data extraction ===\n');
-
-[subject_dir, subject_filename, ~] = fileparts(subject_path);
-
-report_dir = fullfile(subject_dir, 'report');
-label_dir = fullfile(subject_dir, 'label');
-surf_dir = fullfile(subject_dir, 'surf');
 
 result = struct();
 result.Subject = subject_filename;
@@ -132,14 +205,13 @@ if exist(xml_file, 'file')
         result.WM_vol = NaN; result.CSF_vol = NaN; result.WMH_vol = NaN;
     end
 else
+    fprintf('Warning: QC XML file not found: %s\n', xml_file);
     result.IQR = NaN; result.NCR = NaN; result.ICR = NaN; 
     result.res_RMS = NaN; result.TIV = NaN; result.GM_vol = NaN; 
     result.WM_vol = NaN; result.CSF_vol = NaN; result.WMH_vol = NaN;
 end
 
-% 2. CORTICAL THICKNESS (nur DK)
-lh_thick = fullfile(surf_dir, ['lh.thickness.', subject_filename]);
-rh_thick = fullfile(surf_dir, ['rh.thickness.', subject_filename]);
+% 2. CORTICAL THICKNESS (global)
 if exist(lh_thick, 'file') && exist(rh_thick, 'file')
     try
         lh_data = cat_io_FreeSurfer('read_surf_data', lh_thick);
@@ -147,7 +219,7 @@ if exist(lh_thick, 'file') && exist(rh_thick, 'file')
         result.mean_thickness_lh = mean(lh_data, 'omitnan');
         result.mean_thickness_rh = mean(rh_data, 'omitnan');
         result.mean_thickness_global = mean([lh_data; rh_data], 'omitnan');
-        fprintf('Thickness extracted\n');
+        fprintf('Global thickness extracted\n');
     catch ME
         result.mean_thickness_lh = NaN;
         result.mean_thickness_rh = NaN;
@@ -159,7 +231,7 @@ else
     result.mean_thickness_global = NaN;
 end
 
-% 3. GYRIFICATION (nur DK)
+% 3. GYRIFICATION (global)
 lh_gyri = fullfile(surf_dir, ['lh.gyrification.', subject_filename]);
 rh_gyri = fullfile(surf_dir, ['rh.gyrification.', subject_filename]);
 if exist(lh_gyri, 'file') && exist(rh_gyri, 'file')
@@ -169,7 +241,7 @@ if exist(lh_gyri, 'file') && exist(rh_gyri, 'file')
         result.mean_gyri_lh = mean(lh_data, 'omitnan');
         result.mean_gyri_rh = mean(rh_data, 'omitnan');
         result.mean_gyri_global = mean([lh_data; rh_data], 'omitnan');
-        fprintf('Gyrification extracted\n');
+        fprintf('Global gyrification extracted\n');
     catch ME
         result.mean_gyri_lh = NaN;
         result.mean_gyri_rh = NaN;
@@ -181,22 +253,22 @@ else
     result.mean_gyri_global = NaN;
 end
 
-% 4. ROI EXTRACTION - NUR FÜR AKTUELLEN PATIENTEN
+% 4. ROI EXTRACTION - Volume atlases (explizit definiert)
 roi_file = fullfile(label_dir, ['catROI_', subject_filename, '.xml']);
+
+% Liste der gewünschten Atlanten - muss mit CAT12 Konfiguration übereinstimmen
+desired_atlases = {'neuromorphometrics', 'lpba40', 'cobra', 'suit'};
 
 if exist(roi_file, 'file')
     try
         roi_data = cat_io_xml(roi_file);
         
-        % Liste der Atlanten die wir wollen
-        atlases_to_extract = {'neuromorphometrics', 'lpba40', 'cobra', 'aparc_DK40', 'suit'};
-        
-        for atlas_idx = 1:length(atlases_to_extract)
-            atlas_name = atlases_to_extract{atlas_idx};
+        for atlas_idx = 1:length(desired_atlases)
+            atlas_name = desired_atlases{atlas_idx};
             
             % Check if this atlas exists in the data
             if ~isfield(roi_data, atlas_name)
-                fprintf('Warning: Atlas %s not found in XML\n', atlas_name);
+                fprintf('Warning: Atlas %s not found in XML (möglicherweise nicht von CAT12 generiert)\n', atlas_name);
                 continue;
             end
             
@@ -205,7 +277,6 @@ if exist(roi_file, 'file')
             % Extract names - can be in different formats
             if isfield(atlas_struct, 'names')
                 if isstruct(atlas_struct.names)
-                    % names is a struct with 'item' field
                     if isfield(atlas_struct.names, 'item')
                         if iscell(atlas_struct.names.item)
                             roi_names = atlas_struct.names.item;
@@ -213,59 +284,39 @@ if exist(roi_file, 'file')
                             roi_names = {atlas_struct.names.item};
                         end
                     else
-                        fprintf('Warning: Cannot parse names for %s\n', atlas_name);
                         continue;
                     end
                 elseif iscell(atlas_struct.names)
                     roi_names = atlas_struct.names;
                 else
-                    fprintf('Warning: Unexpected names format for %s\n', atlas_name);
                     continue;
                 end
             else
-                fprintf('Warning: No names field for %s\n', atlas_name);
                 continue;
             end
             
-            % Extract volumes (Vgm)
-            if isfield(atlas_struct, 'Vgm')
+            % Extract volumes (Vgm) - check both possible locations
+            if isfield(atlas_struct, 'data') && isfield(atlas_struct.data, 'Vgm')
+                roi_volumes = atlas_struct.data.Vgm;
+            elseif isfield(atlas_struct, 'Vgm')
                 roi_volumes = atlas_struct.Vgm;
             else
                 roi_volumes = [];
             end
             
-            % Extract thickness (nur für DK)
-            if strcmp(atlas_name, 'aparc_DK40') && isfield(atlas_struct, 'thickness')
-                roi_thickness = atlas_struct.thickness;
-            else
-                roi_thickness = [];
+            % Kürze Atlas-Namen für CSV
+            atlas_name_short = atlas_name;
+            if strcmp(atlas_name, 'neuromorphometrics')
+                atlas_name_short = 'Neurom';
             end
             
-            % Extract gyrification (nur für DK)
-            if strcmp(atlas_name, 'aparc_DK40') && isfield(atlas_struct, 'gyrification')
-                roi_gyrification = atlas_struct.gyrification;
-            else
-                roi_gyrification = [];
-            end
-            
-            % Add to result structure
+            % Add to result structure mit kürzerem Präfix
             for r = 1:length(roi_names)
                 roi_name = roi_names{r};
-                roi_name_clean = matlab.lang.makeValidName([atlas_name, '_', roi_name]);
+                roi_name_clean = matlab.lang.makeValidName([atlas_name_short, '_', roi_name]);
                 
-                % Volumes
                 if r <= length(roi_volumes)
-                    result.(['Vol_', roi_name_clean]) = roi_volumes(r);
-                end
-                
-                % Thickness (nur DK)
-                if r <= length(roi_thickness)
-                    result.(['Thick_', roi_name_clean]) = roi_thickness(r);
-                end
-                
-                % Gyrification (nur DK)
-                if r <= length(roi_gyrification)
-                    result.(['Gyri_', roi_name_clean]) = roi_gyrification(r);
+                    result.(['V_', roi_name_clean]) = roi_volumes(r);
                 end
             end
             
@@ -280,14 +331,86 @@ else
     fprintf('Warning: ROI file not found: %s\n', roi_file);
 end
 
-% 5. SAVE TO CSV
+% 5. EXTRACT SURFACE ROI DATA (aparc_DK40, aparc_a2009s)
+surface_roi_xml = fullfile(label_dir, ['catROIs_', subject_filename, '.xml']);
+
+if exist(surface_roi_xml, 'file')
+    try
+        surface_roi_data = cat_io_xml(surface_roi_xml);
+        surface_atlases = fieldnames(surface_roi_data);
+        
+        for atlas_idx = 1:length(surface_atlases)
+            atlas_name = surface_atlases{atlas_idx};
+            
+            % Skip non-atlas fields
+            if strcmp(atlas_name, 'help') || strcmp(atlas_name, 'version') || strcmp(atlas_name, 'comments')
+                continue;
+            end
+            
+            atlas_struct = surface_roi_data.(atlas_name);
+            
+            % Extract names
+            if isfield(atlas_struct, 'names')
+                if iscell(atlas_struct.names)
+                    roi_names = atlas_struct.names;
+                elseif isstruct(atlas_struct.names) && isfield(atlas_struct.names, 'item')
+                    roi_names = atlas_struct.names.item;
+                    if ~iscell(roi_names)
+                        roi_names = {roi_names};
+                    end
+                else
+                    continue;
+                end
+            else
+                continue;
+            end
+            
+            % Extract thickness if available (mit kürzerem Präfix T_)
+            if isfield(atlas_struct, 'data') && isfield(atlas_struct.data, 'thickness')
+                roi_thickness = atlas_struct.data.thickness;
+                
+                for r = 1:length(roi_names)
+                    roi_name_clean = matlab.lang.makeValidName([atlas_name, '_', roi_names{r}]);
+                    if r <= length(roi_thickness)
+                        result.(['T_', roi_name_clean]) = roi_thickness(r);
+                    end
+                end
+                
+                fprintf('Extracted %s thickness (%d regions)\n', atlas_name, length(roi_names));
+            end
+            
+            % Extract gyrification if available (mit kürzerem Präfix G_)
+            if isfield(atlas_struct, 'data') && isfield(atlas_struct.data, 'gyrification')
+                roi_gyri = atlas_struct.data.gyrification;
+                
+                for r = 1:length(roi_names)
+                    roi_name_clean = matlab.lang.makeValidName([atlas_name, '_', roi_names{r}]);
+                    if r <= length(roi_gyri)
+                        result.(['G_', roi_name_clean]) = roi_gyri(r);
+                    end
+                end
+                
+                fprintf('Extracted %s gyrification (%d regions)\n', atlas_name, length(roi_names));
+            end
+        end
+    catch ME
+        fprintf('Warning: Error reading surface ROI file: %s\n', ME.message);
+        disp(getReport(ME));
+    end
+else
+    fprintf('Warning: Surface ROI file not found: %s\n', surface_roi_xml);
+end
+
+% 6. SAVE TO CSV
 output_csv = fullfile(output_root, [subject_filename, '_cat12_results.csv']);
-result_table = struct2table(result, 'AsArray', true);
+result_table = struct2table(result);
 try
     writetable(result_table, output_csv);
     fprintf('Results saved to: %s\n', output_csv);
+    fprintf('Total columns in CSV: %d\n', width(result_table));
 catch ME
     fprintf('Error saving CSV: %s\n', ME.message);
+    disp(getReport(ME));
 end
 
 fprintf('\n=== CAT12 surface analysis and ROI extraction completed successfully ===\n');

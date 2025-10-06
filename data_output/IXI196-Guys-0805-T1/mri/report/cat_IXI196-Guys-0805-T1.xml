@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="utf-8"?>
+<S>
+   <SPMpreprocessing>
+      <Affine>[1.13007741056594 0.0766784352168476 0.00712180411564172 -11.1209156753557;-0.0555882363771788 1.02346096408261 -0.0482606459535916 -18.2117271398571;-0.0150649414101785 0.11403595524053 1.14940342066244 -49.547535318579;0 0 0 1]</Affine>
+      <Affine0>[1.13007741056594 0.0766784352168476 0.00712180411564172 -11.1209156753557;-0.0555882363771788 1.02346096408261 -0.0482606459535916 -18.2117271398571;-0.0150649414101785 0.11403595524053 1.14940342066244 -49.547535318579;0 0 0 1]</Affine0>
+      <lkp>[1 2 3 3 4 4 4 5 5 5 5 6 6]</lkp>
+      <mn>[268.7106534597 340.572776433281 90.9337113497395 170.228365767604 137.668967854223 19.9245650387323 48.5424856534346 169.043147667771 488.670774773947 337.74479109037 259.467235679996 26.0036209227812 8.64342946762909]</mn>
+      <vr>[816.928194977338;165.538695608198;285.19800902872;1532.4105543214;2885.63498297779;70.9821902821807;346.858189405614;2735.58814255804;5265.54199763541;3948.78758386752;1371.90513177641;149.188359088966;17.2716605220201]</vr>
+      <ll>-5.47040987014771</ll>
+      <Affine_translation>[-11.1209156753557 -18.2117271398571 -49.547535318579]</Affine_translation>
+      <Affine_rotation>[-0.111542950872407 0.00777249194263277 0.0503239111127693]</Affine_rotation>
+      <Affine_scaling>[1.13154405939612 1.03234779290494 1.14765315801767]</Affine_scaling>
+      <Affine_shearing>[0.0219012876131675 -0.00514278537710775 0.0772895658060594]</Affine_shearing>
+      <Affine0_translation>[-11.1209156753557 -18.2117271398571 -49.547535318579]</Affine0_translation>
+      <Affine0_rotation>[-0.111542950872407 0.00777249194263277 0.0503239111127693]</Affine0_rotation>
+      <Affine0_scaling>[1.13154405939612 1.03234779290494 1.14765315801767]</Affine0_scaling>
+      <Affine0_shearing>[0.0219012876131675 -0.00514278537710775 0.0772895658060594]</Affine0_shearing>
+   </SPMpreprocessing>
+   <filedata>
+      <help>Structure directory and file names. \n logdir .. path for log file \n rawdir .. origin directory of the RAW data \n BIDSfolder .. relative path to the main result directory \n BIDSdir .. absolution (full) path to the result directory \n</help>
+      <rawdir>/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/mri</rawdir>
+      <path>/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/mri</path>
+      <file>IXI196-Guys-0805-T1</file>
+      <fname>/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/mri/IXI196-Guys-0805-T1.nii</fname>
+      <F>/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/mri/IXI196-Guys-0805-T1.nii</F>
+      <Fm>/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/mri/mri/mIXI196-Guys-0805-T1.nii</Fm>
+      <Fp0>/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/mri/mri/p0IXI196-Guys-0805-T1.nii</Fp0>
+      <fnames>..t/IXI196-Guys-0805-T1/mri/IXI196-Guys-0805-T1</fnames>
+   </filedata>
+   <parameter>
+      <opts>
+         <tpm>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/tpm/TPM.nii</item>
+         </tpm>
+         <ngaus>[1 1 2 3 4 2]</ngaus>
+         <affreg>mni</affreg>
+         <warpreg>[0 0.001 0.5 0.05 0.2]</warpreg>
+         <tol>0.0001</tol>
+         <accstr>0.5</accstr>
+         <biasstr>0.5</biasstr>
+         <biasreg>0.001</biasreg>
+         <biasfwhm>60</biasfwhm>
+         <samp>3</samp>
+         <redspmres>0</redspmres>
+         <fwhm>1</fwhm>
+         <biasacc>0.5</biasacc>
+      </opts>
+      <extopts>
+         <uhrlim>1.4</uhrlim>
+         <gcutstr>2</gcutstr>
+         <cleanupstr>0.5</cleanupstr>
+         <NCstr>-Inf</NCstr>
+         <LASstr>0.5</LASstr>
+         <BVCstr>0.5</BVCstr>
+         <regstr>0.5</regstr>
+         <WMHC>2</WMHC>
+         <WMHCstr>0.5</WMHCstr>
+         <SLC>0</SLC>
+         <mrf>1</mrf>
+         <restype>optimal</restype>
+         <resval>[1 0.3]</resval>
+         <bids_folder>../derivatives/CAT12.9_2577</bids_folder>
+         <bids_yes>0</bids_yes>
+         <nproc>2</nproc>
+         <species>human</species>
+         <APP>1070</APP>
+         <setCOM>1</setCOM>
+         <vox>1.5</vox>
+         <bb>12</bb>
+         <shootingsurf>Template_T1</shootingsurf>
+         <pth_templates>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym</pth_templates>
+         <darteltpm>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_1_Dartel.nii</item>
+         </darteltpm>
+         <shootingtpm>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_0_GS.nii</item>
+         </shootingtpm>
+         <shootingT1>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_T1_masked.nii</item>
+         </shootingT1>
+         <brainmask>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/brainmask.nii</item>
+         </brainmask>
+         <T1>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/T1.nii</item>
+         </T1>
+         <cat12atlas>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/cat.nii</item>
+         </cat12atlas>
+         <pbtres>0.5</pbtres>
+         <SRP>22</SRP>
+         <reduce_mesh>1</reduce_mesh>
+         <vdist>2</vdist>
+         <pbtlas>0</pbtlas>
+         <thick_measure>1</thick_measure>
+         <thick_limit>5</thick_limit>
+         <close_parahipp>1</close_parahipp>
+         <scale_cortex>0.7</scale_cortex>
+         <add_parahipp>0.1</add_parahipp>
+         <colormap>BCGWHw</colormap>
+         <report/>
+         <verb>2</verb>
+         <ignoreErrors>1</ignoreErrors>
+         <expertgui>0</expertgui>
+         <subfolders>1</subfolders>
+         <experimental>0</experimental>
+         <print>2</print>
+         <fontsize>10</fontsize>
+         <send_info>1</send_info>
+         <gifti_dat>1</gifti_dat>
+         <atlas>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/neuromorphometrics.nii</td>
+               <td>0</td>
+               <td>
+                  <item>csf</item>
+                  <item>gm</item>
+                  <item>wm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/lpba40.nii</td>
+               <td>0</td>
+               <td>
+                  <item>gm</item>
+                  <item>wm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/cobra.nii</td>
+               <td>0</td>
+               <td>
+                  <item>gm</item>
+                  <item>wm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/hammers.nii</td>
+               <td>0</td>
+               <td>
+                  <item>csf</item>
+                  <item>gm</item>
+                  <item>wm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/thalamus.nii</td>
+               <td>0</td>
+               <td>
+                  <item>gm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/thalamic_nuclei.nii</td>
+               <td>0</td>
+               <td>
+                  <item>gm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/suit.nii</td>
+               <td>0</td>
+               <td>
+                  <item>gm</item>
+                  <item>wm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/ibsr.nii</td>
+               <td>0</td>
+               <td>
+                  <item>csf</item>
+                  <item>gm</item>
+                  <item>wm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/aal3.nii</td>
+               <td>1</td>
+               <td>
+                  <item>gm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/mori.nii</td>
+               <td>1</td>
+               <td>
+                  <item>gm</item>
+                  <item>wm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/anatomy3.nii</td>
+               <td>1</td>
+               <td>
+                  <item>gm</item>
+                  <item>wm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/julichbrain.nii</td>
+               <td>1</td>
+               <td>
+                  <item>gm</item>
+                  <item>wm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Tian_Subcortex_S4_7T.nii</td>
+               <td>1</td>
+               <td>
+                  <item>gm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Schaefer2018_100Parcels_17Networks_order.nii</td>
+               <td>1</td>
+               <td>
+                  <item>gm</item>
+                  <item>wm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Schaefer2018_200Parcels_17Networks_order.nii</td>
+               <td>1</td>
+               <td>
+                  <item>gm</item>
+                  <item>wm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Schaefer2018_400Parcels_17Networks_order.nii</td>
+               <td>1</td>
+               <td>
+                  <item>gm</item>
+                  <item>wm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+            <tr>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Schaefer2018_600Parcels_17Networks_order.nii</td>
+               <td>1</td>
+               <td>
+                  <item>gm</item>
+                  <item>wm</item>
+               </td>
+               <td>[false]</td>
+            </tr>
+         </atlas>
+         <satlas>
+            <tr>
+               <td>Desikan</td>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/atlases_surfaces/lh.aparc_a2009s.freesurfer.annot</td>
+               <td>0</td>
+               <td>1</td>
+            </tr>
+            <tr>
+               <td>Destrieux</td>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/atlases_surfaces/lh.aparc_DK40.freesurfer.annot</td>
+               <td>0</td>
+               <td>1</td>
+            </tr>
+            <tr>
+               <td>HCP</td>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/atlases_surfaces/lh.aparc_HCP_MMP1.freesurfer.annot</td>
+               <td>0</td>
+               <td>0</td>
+            </tr>
+            <tr>
+               <td>Schaefer2018_100P_17N</td>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/atlases_surfaces/lh.Schaefer2018_100Parcels_17Networks_order.annot</td>
+               <td>1</td>
+               <td>0</td>
+            </tr>
+            <tr>
+               <td>Schaefer2018_200P_17N</td>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/atlases_surfaces/lh.Schaefer2018_200Parcels_17Networks_order.annot</td>
+               <td>0</td>
+               <td>0</td>
+            </tr>
+            <tr>
+               <td>Schaefer2018_400P_17N</td>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/atlases_surfaces/lh.Schaefer2018_400Parcels_17Networks_order.annot</td>
+               <td>1</td>
+               <td>0</td>
+            </tr>
+            <tr>
+               <td>Schaefer2018_600P_17N</td>
+               <td>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/atlases_surfaces/lh.Schaefer2018_600Parcels_17Networks_order.annot</td>
+               <td>1</td>
+               <td>0</td>
+            </tr>
+         </satlas>
+         <LAB>
+            <NB>0</NB>
+            <CT>1</CT>
+            <CB>3</CB>
+            <BG>5</BG>
+            <BV>7</BV>
+            <TH>9</TH>
+            <ON>11</ON>
+            <MB>13</MB>
+            <BS>13</BS>
+            <VT>15</VT>
+            <NV>17</NV>
+            <HC>19</HC>
+            <HD>21</HD>
+            <HI>23</HI>
+            <PH>25</PH>
+            <LE>27</LE>
+         </LAB>
+         <new_release>0</new_release>
+         <lazy>0</lazy>
+         <affmod>0</affmod>
+         <restypes>
+            <optimal>[1 0.3]</optimal>
+         </restypes>
+         <LASmyostr>0</LASmyostr>
+         <shooting>
+            <shootingtpm>
+               <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_0_GS.nii</item>
+            </shootingtpm>
+            <regstr>0.5</regstr>
+         </shooting>
+         <darteltpms>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_1_Dartel.nii</item>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_2_Dartel.nii</item>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_3_Dartel.nii</item>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_4_Dartel.nii</item>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_5_Dartel.nii</item>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_6_Dartel.nii</item>
+         </darteltpms>
+         <shootingtpms>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_0_GS.nii</item>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_1_GS.nii</item>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_2_GS.nii</item>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_3_GS.nii</item>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_4_GS.nii</item>
+         </shootingtpms>
+         <templates>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_0_GS.nii</item>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_1_GS.nii</item>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_2_GS.nii</item>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_3_GS.nii</item>
+            <item>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Template_4_GS.nii</item>
+         </templates>
+         <inv_weighting>0</inv_weighting>
+         <AMAPframing>1</AMAPframing>
+      </extopts>
+   </parameter>
+   <qualitymeasures>
+      <software>
+         <version_segment>1639</version_segment>
+      </software>
+      <SurfaceEulerNumber>14</SurfaceEulerNumber>
+      <SurfaceDefectArea>0.47904848991438</SurfaceDefectArea>
+      <SurfaceDefectNumber>3.5</SurfaceDefectNumber>
+      <SurfaceIntensityRMSE>0.0760158002376556</SurfaceIntensityRMSE>
+      <SurfacePositionRMSE>0.0812139362096786</SurfacePositionRMSE>
+      <res_vx_vol>[0.937499947129088 0.937499988919138 1.19999965686336]</res_vx_vol>
+      <res_vx_voli>[0.937499886140778 0.937499989156504 1.19999965829147]</res_vx_voli>
+      <res_RMS>1.03244234004659</res_RMS>
+      <res_BB>0</res_BB>
+      <res_ECR>0.346996784210205</res_ECR>
+      <tissue_mn>[0.484845042228699 97.6814422607422 245.25048828125 359.471771240234]</tissue_mn>
+      <tissue_mnr>[0.00134877080563456 0.271736055612564 0.682252407073975 1]</tissue_mnr>
+      <tissue_weighting>T1</tissue_weighting>
+      <tissue_std>[0.41234723917901 0.0913717214954172 0.0876040245532134 0.0542179686396434]</tissue_std>
+      <tissue_stdr>[0.0011486413422972 0.00025452658883296 0.000244031238253228 0.000151030471897684]</tissue_stdr>
+      <contrast>97.3278656005859</contrast>
+      <contrastr>0.270752459764481</contrastr>
+      <NCR>0.0665982523933053</NCR>
+      <ICR>0.177020892500877</ICR>
+   </qualitymeasures>
+   <qualityratings>
+      <res_vx_vol>[1.87499989425818 1.87499997783828 2.39999931372672]</res_vx_vol>
+      <res_RMS>2.06488468009317</res_RMS>
+      <res_ECR>2.26855301856995</res_ECR>
+      <res_BB>1</res_BB>
+      <tissue_mn>[1.19437158107758 8.62400054931641 8.62400054931641 8.62400054931641]</tissue_mn>
+      <tissue_std>[6.37206196677816 1.00709151704374 1.01462976317798 1.19715427411208]</tissue_std>
+      <contrast>-1453.91796875</contrast>
+      <contrastr>1.93871307373047</contrastr>
+      <NCR>1.2870837265763</NCR>
+      <ICR>0.898861348628998</ICR>
+      <SurfaceEulerNumber>1.61224489795918</SurfaceEulerNumber>
+      <SurfaceDefectArea>1.11976212247859</SurfaceDefectArea>
+      <SurfaceDefectNumber>1.175</SurfaceDefectNumber>
+      <SurfaceIntensityRMSE>1.52031600475311</SurfaceIntensityRMSE>
+      <SurfacePositionRMSE>1.62427878379822</SurfacePositionRMSE>
+      <SIQR>2.07711848528556</SIQR>
+      <SIQR3rms2>2.07711848528556</SIQR3rms2>
+      <SIQR4rms2>1.72297836488325</SIQR4rms2>
+      <SIQR4rms8>2.00385447583955</SIQR4rms8>
+      <IQR>1.89884801490665</IQR>
+   </qualityratings>
+   <ratings_help>
+      <qualitymeasures>
+         <res_vx_vol>voxel dimensions</res_vx_vol>
+         <res_RMS>RMS error of voxel size</res_RMS>
+         <res_ECR>normalized gradient slope of the white matter boundary</res_ECR>
+         <res_BB>brain next to the image boundary</res_BB>
+         <tissue_mn>mean within the tissue classes</tissue_mn>
+         <tissue_std>standard deviation within the tissue classes</tissue_std>
+         <contrast>contrast between tissue classes</contrast>
+         <contrastr>contrast between tissue classes</contrastr>
+         <NCR>noise to contrast ratio</NCR>
+         <ICR>inhomogeneity to contrast ratio</ICR>
+         <SurfaceEulerNumber>average Euler number (characteristic)</SurfaceEulerNumber>
+         <SurfaceDefectArea>average area of topological defects</SurfaceDefectArea>
+         <SurfaceDefectNumber>average number of defects</SurfaceDefectNumber>
+         <SurfaceIntensityRMSE>RMSE of the expected boundary intensity Ym of the IS, OS, and CS</SurfaceIntensityRMSE>
+         <SurfacePositionRMSE>RMSE of the expected boundary position Ypp of the IS, OS, and CS</SurfacePositionRMSE>
+         <SurfaceSelfIntersections>Percentual area of self-intersections of the IS and OS.</SurfaceSelfIntersections>
+      </qualitymeasures>
+      <subjectmeasures>
+         <vol_TIV>total intracranial volume (GM+WM+VT)</vol_TIV>
+         <vol_rel_CGW>relative tissue volume (CSF,GM,WM)</vol_rel_CGW>
+         <vol_rel_WMH>relative WMH volume</vol_rel_WMH>
+         <surf_TSA>total surface area</surf_TSA>
+      </subjectmeasures>
+   </ratings_help>
+   <software>
+      <version_segment>1639</version_segment>
+      <system>LINUX</system>
+      <version_spm>7771</version_spm>
+      <version_matlab>9.12</version_matlab>
+      <version_cat>12.9</version_cat>
+      <revision_cat>2577</revision_cat>
+      <function>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/cat_vol_qa202205.m</function>
+      <markdefs>/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/cat_stat_marks.m</markdefs>
+      <qamethod>cat12</qamethod>
+      <date>20251003-234831</date>
+   </software>
+   <subjectmeasures>
+      <software>
+         <version_segment>1639</version_segment>
+      </software>
+      <qualitymeasures>
+         <software>
+            <version_segment>1639</version_segment>
+         </software>
+         <SurfaceEulerNumber>14</SurfaceEulerNumber>
+         <SurfaceDefectArea>0.47904848991438</SurfaceDefectArea>
+         <SurfaceDefectNumber>3.5</SurfaceDefectNumber>
+         <SurfaceIntensityRMSE>0.0760158002376556</SurfaceIntensityRMSE>
+         <SurfacePositionRMSE>0.0812139362096786</SurfacePositionRMSE>
+      </qualitymeasures>
+      <EC_abs>14</EC_abs>
+      <defect_size>0.47904848991438</defect_size>
+      <vol_abs_CGW>[295.856069873446 651.180454516579 445.72068189634 0 0]</vol_abs_CGW>
+      <vol_abs_WMH>1.6402617228304</vol_abs_WMH>
+      <vol_rel_WMH>0.00117770830079133</vol_rel_WMH>
+      <surf_TSA>1832.01791750938</surf_TSA>
+      <vol_TIV>1392.75720628637</vol_TIV>
+      <vol_rel_CGW>[0.212424727395462 0.467547718710342 0.320027553894196 0 0]</vol_rel_CGW>
+      <dist_thickness>
+         <item>[2.58024874222886 0.638258512691853]</item>
+      </dist_thickness>
+      <dist_thickness_kmeans>[2.62016201019287 0.638258512691853 1]</dist_thickness_kmeans>
+      <dist_thickness_kmeans_inner3>[1.88369239793722 0.253800677495372 0.231696776777621;2.56177882491077 0.182153994971284 0.422202078546282;3.19653745524669 0.23974359684832 0.346101144676097]</dist_thickness_kmeans_inner3>
+      <dist_thickness_kmeans_outer2>[1.05782271169489 0.198055860508895 0.592212096106048;3.97703034671425 0.26639714150228 0.407787903893952]</dist_thickness_kmeans_outer2>
+   </subjectmeasures>
+   <subjectratings>
+      <vol_TIV>1.00124971086179</vol_TIV>
+      <vol_rel_CGW>[1.66495559259091 6.24690586764263 3.59747762022622 -2.15014367816092 -2.15014367816092]</vol_rel_CGW>
+      <vol_rel_WMH>1.11777083007913</vol_rel_WMH>
+      <surf_TSA>8.59794056187737</surf_TSA>
+      <SQR>5.11645256211582</SQR>
+   </subjectratings>
+   <ppe>
+      <affreg>
+         <skullstrippedBGth>0</skullstrippedBGth>
+         <skullstrippedpara>[0.460975952148438 1 1 5588.59934885251 0.326972842911442]</skullstrippedpara>
+         <skullstripped>[false]</skullstripped>
+         <highBGpara>[0 0 0.0244200807064772]</highBGpara>
+         <highBG>[false]</highBG>
+         <Affine_catfinal>[1.1434868734343 0.0784389524525247 0.00605066288052311 -11.2498656673929;-0.0570493355922378 1.04408270285954 -0.0374454553473395 -18.9872871476734;-0.0213396404516534 0.126837060941166 1.16032213727999 -49.286393392658;0 0 0 1]</Affine_catfinal>
+      </affreg>
+      <SPMvols0>[746.802358042549 408.085468759039 475.888032344692 814.009470130641 2314.62534045578 6072.99770918618]</SPMvols0>
+      <SPMvols1>[659.49292714679 379.521151648336 305.7395133547 746.555490958183 1696.4219309858 6580.35393059018]</SPMvols1>
+      <tths>
+         <gintnorm>
+            <T3th>[105.154899597168 263.210296630859 341.279205322266]</T3th>
+            <Tth>
+               <T3th>[0 0 3.28461766242981 105.154899597168 263.210296630859 341.279205322266 459.341369628906 811.871032714844]</T3th>
+               <T3thx>[0 0.02 0.05 1 2 3 4 5]</T3thx>
+            </Tth>
+         </gintnorm>
+      </tths>
+      <reginitp>
+         <opt>
+            <nits>8</nits>
+            <vxreg>1.5</vxreg>
+            <rres>2</rres>
+            <stepsize>0.5</stepsize>
+            <resfac>[1.5 1.25 1 1 1]</resfac>
+            <ll1th>0.01</ll1th>
+            <ll3th>[0.02 0.02 0.02 0.02 0.02;0.02 0.02 0.02 0.02 0.02;0.02 0.02 0.02 0.02 0.02;0.02 0.02 0.02 0.02 0.02;0.02 0.02 0.02 0.02 0.02]</ll3th>
+            <regstr>13</regstr>
+         </opt>
+         <fast>0</fast>
+         <clsn>2</clsn>
+         <regra>1</regra>
+         <testfolder>Shooting_Template_0_GS_tr1.5_rr3.0-2.0_or1.5_regstr13.0</testfolder>
+         <dtc>[0.0198894236236811 0.0364882312715054 0.048591285943985 0.0680390149354935 0.0746283009648323 0.0746283009648323]</dtc>
+         <ll>[0.0838548065710659 0 0.0838548065710659 0;0.0796801720714773 0.0014033701861707 0.081083542257648 1549.73327636719;0.0763290342178538 0.0018971548489911 0.0782261890668449 4096.21533203125;0.0659432248014947 0.0035170698053527 0.0694602946068474 7593.83203125;0.0621482968187275 0.00436667044204835 0.0665149672607758 9428.2353515625;0.186444890456182 0.013100011326145 0.199544901782328 9428.2353515625]</ll>
+         <rmsdtc>[0.0435327589511871 0.0453631952404976 0.0659202188253403 0.104163497686386 0.118162699043751 0.118162699043751]</rmsdtc>
+         <rmsgdt>[0.0311335101723671 0.0171767380088568 0.0317779295146465 0.0654063001275063 0.0781847909092903 0.0781847909092903]</rmsgdt>
+         <rmsdt>0.118162699043751</rmsdt>
+         <dt>0.0746283009648323</dt>
+      </reginitp>
+      <Affine_SPMfinal>[1.13650365902762 0.0776673264780844 0.00736571720975077 -11.1182092945526;-0.0563101330993373 1.02655761910421 -0.0531945381224794 -17.5399811622795;-0.0217872548618687 0.108468201434667 1.1728905933569 -50.0196202848612;0 0 0 1]</Affine_SPMfinal>
+      <reg>
+         <opt>
+            <nits>64</nits>
+            <vxreg>1.5</vxreg>
+            <rres>1.5</rres>
+            <stepsize>0.25</stepsize>
+            <resfac>[1.66666666666667 1.5 1.33333333333333 1.16666666666667 1]</resfac>
+            <ll1th>0.051</ll1th>
+            <ll3th>[0.0501 0.0501 0.0501 0.0501 0.0501;0.0501 0.0501 0.0501 0.0501 0.0501;0.0501 0.0501 0.0501 0.0501 0.0501;0.0501 0.0501 0.0501 0.0501 0.0501;0.0501 0.0501 0.0501 0.0501 0.0501]</ll3th>
+            <regstr>0.5</regstr>
+         </opt>
+         <fast>0</fast>
+         <clsn>2</clsn>
+         <regra>1</regra>
+         <testfolder>Shooting_Template_0_GS_tr1.5_rr2.5-1.5_or1.5_regstr0.5</testfolder>
+         <dtc>[0.00796930771321058 0.0270853899419308 0.0394012033939362 0.049070380628109 0.0563936457037926 0.0629049018025398]</dtc>
+         <ll>[0.0819553601667672 0 0.0819553601667672 0;0.221690384615385 0.0101526690323565 0.231843053647741 5196.8974609375;0.204016220203359 0.0147361027744431 0.218752322977802 10605.75;0.183346001171319 0.0178830109656933 0.201229012137012 19282.75;0.166190996757087 0.020895118080799 0.187086114837886 36552.9375;0.166190996757087 0.020895118080799 0.187086114837886 36552.9375]</ll>
+         <rmsdtc>[0.00943876709789038 0.0324302054941654 0.0503138303756714 0.0772148370742798 0.102374143898487 0.109584927558899]</rmsdtc>
+         <rmsgdt>[0.0028711084742099 0.0114969816058874 0.0269750338047743 0.0486535243690014 0.0671146512031555 0.0732083022594452]</rmsgdt>
+         <rmsdt>0.109584927558899</rmsdt>
+         <dt>0.0629049018025398</dt>
+      </reg>
+   </ppe>
+   <catlog>
+      <item>------------------------------------------------------------------------</item>
+      <item>CAT12.9 r2577: 1/1: ./IXI196-Guys-0805-T1/mri/IXI196-Guys-0805-T1.n</item>
+      <item>------------------------------------------------------------------------</item>
+      <item>SANLM denoising (medium) 87s</item>
+      <item>Affine preprocessing (APP)</item>
+      <item>Initialize 14s</item>
+      <item>Estimate background 32s</item>
+      <item>Initial correction 16s</item>
+      <item>Refine background 11s</item>
+      <item>Final correction 14s</item>
+      <item>Final scaling 19s</item>
+      <item>118s</item>
+      <item>Correct center-of-mass 19s</item>
+      <item>Affine registration 28s</item>
+      <item>SPM preprocessing 1 (estimate 1 - TPM registration): 153s</item>
+      <item>SPM preprocessing 1 (estimate 2): 147s</item>
+      <item>SPM preprocessing 2 (write)</item>
+      <item>Write Segmentation 38s</item>
+      <item>Update Segmentation 32s</item>
+      <item>Update Skull-Stripping 79s</item>
+      <item>Update probability maps 14s</item>
+      <item>163s</item>
+      <item>Global intensity correction 29s</item>
+      <item>SANLM denoising after intensity normalization (medium) 33s</item>
+      <item>Fast Optimized Shooting registration 6s</item>
+      <item>122s</item>
+      <item>Local adaptive segmentation (LASstr=0.50)</item>
+      <item>Prepare maps 9s</item>
+      <item>Prepare partitions 4s</item>
+      <item>Prepare segments (LASmod = 1.00) 32s</item>
+      <item>Estimate local tissue thresholds (WM) 42s</item>
+      <item>Estimate local tissue thresholds (GM) 47s</item>
+      <item>Intensity transformation 0s</item>
+      <item>SANLM denoising after LAS (medium) 37s</item>
+      <item>175s</item>
+      <item>ROI segmentation (partitioning)</item>
+      <item>Atlas -&gt; subject space 19s</item>
+      <item>Major structures 24s</item>
+      <item>Ventricle detection 22s</item>
+      <item>Blood vessel detection 17s</item>
+      <item>WMH detection (WMHCstr=0.49 &gt; WMHCstr'=0.17) 42s</item>
+      <item>Manual stroke lesion detection 0s</item>
+      <item>Closing of deep structures 4s</item>
+      <item>Side alignment 7s</item>
+      <item>Final corrections 5s</item>
+      <item>141s</item>
+      <item>Apply enhanced blood vessel correction 2s</item>
+      <item>Amap using initial SPM12 segmentations (MRF filter strength 0.06) 94s</item>
+      <item>AMAP peaks: [CSF,GM,WM] = [0.36Â±0.06,0.67Â±0.07,0.98Â±0.05]</item>
+      <item>Final cleanup (gcutstr=0.24)</item>
+      <item>Level 1 cleanup (ROI estimation) 9s</item>
+      <item>Level 1 cleanup (brain masking) 6s</item>
+      <item>Level 2 cleanup (CSF correction) 3s</item>
+      <item>Level 3 cleanup (CSF/WM PVE) 5s</item>
+      <item>23s</item>
+      <item>6s</item>
+      <item>Write result maps 20s</item>
+      <item>Surface and thickness estimation</item>
+      <item>lh:</item>
+      <item>Thickness estimation (0.50 mmÂ³) 268s</item>
+      <item>Create initial surface 187s</item>
+      <item>Topology correction: 159s</item>
+      <item>Surface refinement: 126s</item>
+      <item>Reduction of surface collisions with optimization: 116s</item>
+      <item>Spherical mapping with areal smoothing 169s</item>
+      <item>Spherical registration 419s</item>
+      <item>rh:</item>
+      <item>Thickness estimation (0.50 mmÂ³) 271s</item>
+      <item>Create initial surface 186s</item>
+      <item>Topology correction: 158s</item>
+      <item>Surface refinement: 171s</item>
+      <item>Reduction of surface collisions with optimization: 112s</item>
+      <item>Spherical mapping with areal smoothing 167s</item>
+      <item>Spherical registration 408s</item>
+      <item>Final surface processing results:</item>
+      <item>Average thickness: 2.5803 Â± 0.6382 mm</item>
+      <item>Euler characteristic / defect size: 14 / 0.48%</item>
+      <item>Display thickness: /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/mri/surf/lh.thickness.IXI196-Guys-0805-T1</item>
+      <item>Display thickness: /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/mri/surf/rh.thickness.IXI196-Guys-0805-T1</item>
+      <item>Show surfaces in orthview: /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/mri/IXI196-Guys-0805-T1.nii</item>
+      <item>Surface and thickness estimation takes 3120s</item>
+      <item>ROI estimation</item>
+      <item>ROI estimation of 'thalamic_nuclei' atlas 5s</item>
+      <item>ROI estimation of 'cobra' atlas 17s</item>
+      <item>ROI estimation of 'neuromorphometrics' atlas 65s</item>
+      <item>ROI estimation of 'lpba40' atlas 19s</item>
+      <item>ROI estimation of 'hammers' atlas 45s</item>
+      <item>ROI estimation of 'thalamus' atlas 4s</item>
+      <item>ROI estimation of 'suit' atlas 10s</item>
+      <item>ROI estimation of 'ibsr' atlas 16s</item>
+      <item>Write results 18s</item>
+      <item>184s</item>
+      <item>Quality check 14s</item>
+      <item>------------------------------------------------------------------------</item>
+      <item>CAT preprocessing takes 88 minute(s) and 4 second(s).</item>
+      <item>Image Quality Rating (IQR): 86.01% (B)</item>
+      <item>Segmentations are saved in /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/mri/mri</item>
+      <item>Reports are saved in /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/mri/report</item>
+      <item>Labels are saved in /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/mri/label</item>
+      <item>------------------------------------------------------------------------</item>
+   </catlog>
+</S>

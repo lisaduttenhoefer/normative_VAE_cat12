@@ -10,139 +10,154 @@ For product information, visit www.mathworks.com.
  
 Processing subject: /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI196-Guys-0805-T1.nii
 Output directory: /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1
-Item extopts: No field(s) named
-print
-Item output: No field(s) named
-atlases
 
 
 ------------------------------------------------------------------------
-02-Oct-2025 18:37:16 - Running job #1
+06-Oct-2025 16:37:25 - Running job #1
 ------------------------------------------------------------------------
-02-Oct-2025 18:37:16 - Running 'CAT12: Segmentation'
+06-Oct-2025 16:37:25 - Running 'CAT12: Segmentation'
 
 ------------------------------------------------------------------------
-CAT12.9 r2577: 1/1:     ./stumrani/mri_prep/ixinii/IXI196-Guys-0805-T1.n
+CAT12.9 r2577: 1/1:          ./IXI196-Guys-0805-T1/IXI196-Guys-0805-T1.n
 ------------------------------------------------------------------------
-SANLM denoising (medium)                                             34s
+SANLM denoising (medium)                                             87s
 Affine preprocessing (APP)                                        
-  Initialize                                                          6s
-  Estimate background                                                11s
-  Initial correction                                                  8s
-  Refine background                                                   4s
-  Final correction                                                    6s
-  Final scaling                                                       7s
-                                                                     48s
-Correct center-of-mass                                                9s
-Affine registration                                                  12s
-SPM preprocessing 1 (estimate 1 - TPM registration):                 64s
-SPM preprocessing 1 (estimate 2):                                    58s
+  Initialize                                                         13s
+  Estimate background                                                31s
+  Initial correction                                                 16s
+  Refine background                                                  11s
+  Final correction                                                   14s
+  Final scaling                                                      19s
+                                                                    117s
+Correct center-of-mass                                               19s
+Affine registration                                                  28s
+SPM preprocessing 1 (estimate 1 - TPM registration):                153s
+SPM preprocessing 1 (estimate 2):                                   148s
 SPM preprocessing 2 (write)                                       
-  Write Segmentation                                                 18s
-  Update Segmentation                                                13s
-  Update Skull-Stripping                                             34s
-  Update probability maps                                             6s
-                                                                     71s
-Global intensity correction                                          13s
-SANLM denoising after intensity normalization (medium)               12s
-Fast Optimized Shooting registration                                  3s
-   47s
+  Write Segmentation                                                 38s
+  Update Segmentation                                                30s
+  Update Skull-Stripping                                             81s
+  Update probability maps                                            14s
+                                                                    164s
+Global intensity correction                                          31s
+SANLM denoising after intensity normalization (medium)               33s
+Fast Optimized Shooting registration                                  6s
+  122s
 Local adaptive segmentation (LASstr=0.50)                         
-  Prepare maps                                                        3s
-  Prepare partitions                                                  2s
-  Prepare segments (LASmod = 1.00)                                   12s
-  Estimate local tissue thresholds (WM)                              20s
-  Estimate local tissue thresholds (GM)                              23s
+  Prepare maps                                                        9s
+  Prepare partitions                                                  4s
+  Prepare segments (LASmod = 1.00)                                   32s
+  Estimate local tissue thresholds (WM)                              41s
+  Estimate local tissue thresholds (GM)                              49s
   Intensity transformation                                            0s
-  SANLM denoising after LAS (medium)                                 17s
-                                                                     79s
+  SANLM denoising after LAS (medium)                                 38s
+                                                                    178s
 ROI segmentation (partitioning)                                   
-  Atlas -> subject space                                              6s
-  Major structures                                                    9s
-  Ventricle detection                                                 8s
-  Blood vessel detection                                              7s
-  WMH detection (WMHCstr=0.49 > WMHCstr'=0.17)                       15s
+  Atlas -> subject space                                             18s
+  Major structures                                                   24s
+  Ventricle detection                                                23s
+  Blood vessel detection                                             17s
+  WMH detection (WMHCstr=0.49 > WMHCstr'=0.17)                       43s
   Manual stroke lesion detection                                      0s
-  Closing of deep structures                                          1s
-  Side alignment                                                      2s
-  Final corrections                                                   2s
-                                                                     51s
-Apply enhanced blood vessel correction                                1s
-Amap using initial SPM12 segmentations (MRF filter strength 0.06)    28s
+  Closing of deep structures                                          4s
+  Side alignment                                                      7s
+  Final corrections                                                   5s
+                                                                    140s
+Apply enhanced blood vessel correction                                2s
+Amap using initial SPM12 segmentations (MRF filter strength 0.06)    94s
     AMAP peaks: [CSF,GM,WM] = [0.36±0.06,0.67±0.07,0.98±0.05]
 Final cleanup (gcutstr=0.24)                                      
-  Level 1 cleanup (ROI estimation)                                    3s
-  Level 1 cleanup (brain masking)                                     3s
-  Level 2 cleanup (CSF correction)                                    1s
-  Level 3 cleanup (CSF/WM PVE)                                        2s
-                                                                      9s
-    2s
-Write result maps                                                     7s
+  Level 1 cleanup (ROI estimation)                                    9s
+  Level 1 cleanup (brain masking)                                     7s
+  Level 2 cleanup (CSF correction)                                    3s
+  Level 3 cleanup (CSF/WM PVE)                                        5s
+                                                                     24s
+    5s
+Write result maps                                                    20s
 Surface and thickness estimation                                  
 lh:
-  Thickness estimation (0.50 mm³)                                    92s
-  Create initial surface                                             72s
-  Topology correction:                                               65s
-  Surface refinement:                                                77s
-  Reduction of surface collisions with optimization:                 53s
-  Spherical mapping with areal smoothing                             62s
-  Spherical registration                                            245s
+  Thickness estimation (0.50 mm³)                                   269s
+  Create initial surface                                            187s
+  Topology correction:                                              158s
+  Surface refinement:                                               126s
+  Reduction of surface collisions with optimization:                118s
+  Spherical mapping with areal smoothing                            168s
+  Spherical registration                                            420s
 rh:
-  Thickness estimation (0.50 mm³)                                    93s
-  Create initial surface                                             71s
-  Topology correction:                                               64s
-  Surface refinement:                                                58s
-  Reduction of surface collisions with optimization:                 51s
-  Spherical mapping with areal smoothing                             61s
-  Spherical registration                                            238s
+  Thickness estimation (0.50 mm³)                                   271s
+  Create initial surface                                            187s
+  Topology correction:                                              156s
+  Surface refinement:                                               173s
+  Reduction of surface collisions with optimization:                112s
+  Spherical mapping with areal smoothing                            168s
+  Spherical registration                                            410s
 Final surface processing results: 
-  Average thickness:                          2.5819 ± 0.6394 mm
+  Average thickness:                          2.5803 ± 0.6382 mm
   Euler characteristic / defect size:         14 / 0.48%
-  Display thickness:          /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/surf/lh.thickness.IXI196-Guys-0805-T1
-  Display thickness:          /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/surf/rh.thickness.IXI196-Guys-0805-T1
-  Show surfaces in orthview:  /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI196-Guys-0805-T1.nii
-Surface and thickness estimation takes                             1390s
+  Display thickness:          /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/surf/lh.thickness.IXI196-Guys-0805-T1
+  Display thickness:          /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/surf/rh.thickness.IXI196-Guys-0805-T1
+  Show surfaces in orthview:  /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/IXI196-Guys-0805-T1.nii
+Surface and thickness estimation takes                             3130s
 ROI estimation                                                    
-  ROI estimation of 'thalamic_nuclei' atlas                           2s
-  ROI estimation of 'cobra' atlas                                     7s
-  ROI estimation of 'neuromorphometrics' atlas                       25s
-  ROI estimation of 'lpba40' atlas                                    7s
-  ROI estimation of 'thalamus' atlas                                  2s
-  ROI estimation of 'suit' atlas                                      4s
-  Write results                                                       5s
-                                                                     47s
-Quality check                                                         6s
+  ROI estimation of 'thalamic_nuclei' atlas                           5s
+  ROI estimation of 'cobra' atlas                                    17s
+  ROI estimation of 'neuromorphometrics' atlas                       64s
+  ROI estimation of 'lpba40' atlas                                   19s
+  ROI estimation of 'suit' atlas                                     12s
+  Write results                                                      13s
+                                                                    119s
+Quality check                                                        14s
 
 ------------------------------------------------------------------------
-CAT preprocessing takes 36 minute(s) and 50 second(s).
+CAT preprocessing takes 87 minute(s) and 18 second(s).
 Image Quality Rating (IQR):  86.01% (B)
-Segmentations are saved in /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/mri
-Reports are saved in /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/report
-Labels are saved in /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/label
+Segmentations are saved in /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/mri
+Reports are saved in /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/report
+Labels are saved in /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/label
 ------------------------------------------------------------------------
 
-  Remove "/net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/report/catreport_IXI196-Guys-0805-T1.pdf" from dependency list because it does not exist!
+  Remove "/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/report/catreport_IXI196-Guys-0805-T1.pdf" from dependency list because it does not exist!
 One or multiple files do not exist and were removed from the dependency list 
 and following batches will may not work correctly!
 
-  Remove "/net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/report/catreportj_IXI196-Guys-0805-T1.jpg" from dependency list because it does not exist!
+  Remove "/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/report/catreportj_IXI196-Guys-0805-T1.jpg" from dependency list because it does not exist!
 One or multiple files do not exist and were removed from the dependency list 
 and following batches will may not work correctly!
 
-02-Oct-2025 19:14:09 - Done    'CAT12: Segmentation'
-02-Oct-2025 19:14:09 - Done
+06-Oct-2025 18:04:48 - Done    'CAT12: Segmentation'
+06-Oct-2025 18:04:48 - Running 'Extract additional surface parameters'
+
+     1/1) Extract parameters for /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/surf/lh.central.IXI196-Guys-0805-T1.gii
+ Reprocessing! 
+             2s - Display /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/surf/lh.gyrification.IXI196-Guys-0805-T1
+ Reprocessing! 
+             9s - Display /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/surf/lh.depth.IXI196-Guys-0805-T1
+ Reprocessing! 
+             1s - Display /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/surf/rh.gyrification.IXI196-Guys-0805-T1
+ Reprocessing! 
+             9s - Display /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/surf/rh.depth.IXI196-Guys-0805-T1
+06-Oct-2025 18:05:09 - Done    'Extract additional surface parameters'
+06-Oct-2025 18:05:09 - Done
 
 CAT12 processing completed successfully
 
+=== Running surface ROI extraction ===
+Surface ROI extraction for thickness completed
+Surface ROI extraction for gyrification completed
+
 === Starting data extraction ===
 Quality measures extracted
-Thickness extracted
-Gyrification extracted
+Global thickness extracted
+Global gyrification extracted
 Extracted neuromorphometrics atlas (136 regions)
 Extracted lpba40 atlas (56 regions)
 Extracted cobra atlas (52 regions)
-Warning: Atlas aparc_DK40 not found in XML
 Extracted suit atlas (28 regions)
+Extracted aparc_DK40 thickness (72 regions)
+Extracted aparc_DK40 gyrification (72 regions)
+Extracted aparc_a2009s thickness (152 regions)
+Extracted aparc_a2009s gyrification (152 regions)
 Results saved to: /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI196-Guys-0805-T1/IXI196-Guys-0805-T1_cat12_results.csv
+Total columns in CSV: 736
 
 === CAT12 surface analysis and ROI extraction completed successfully ===
