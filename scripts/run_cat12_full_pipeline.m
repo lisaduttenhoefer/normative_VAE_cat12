@@ -103,13 +103,32 @@ end
 % =========================================================================
 fprintf('\n=== Running surface ROI extraction ===\n');
 
-% CAT12 creates subdirectories in the same location as the input file
-surf_dir = fullfile(output_root, 'surf');
-label_dir = fullfile(output_root, 'label');
-report_dir = fullfile(output_root, 'report');
+% Check both possible directory structures
+% Option 1: Flat structure (all files directly in output_root)
+% Option 2: Subfolder structure (files in surf/, label/, report/)
+
+% Try flat structure first
+surf_dir = output_root;
+label_dir = output_root;
+report_dir = output_root;
+
+lh_thick = fullfile(surf_dir, ['lh.thickness.', subject_filename]);
+
+% If not found in flat structure, try subfolder structure
+if ~exist(lh_thick, 'file')
+    fprintf('Files not in flat structure, checking subfolders...\n');
+    surf_dir = fullfile(output_root, 'surf');
+    label_dir = fullfile(output_root, 'label');
+    report_dir = fullfile(output_root, 'report');
+    lh_thick = fullfile(surf_dir, ['lh.thickness.', subject_filename]);
+end
+
+fprintf('Using directories:\n');
+fprintf('  surf_dir: %s\n', surf_dir);
+fprintf('  label_dir: %s\n', label_dir);
+fprintf('  report_dir: %s\n', report_dir);
 
 % Check if thickness files exist
-lh_thick = fullfile(surf_dir, ['lh.thickness.', subject_filename]);
 rh_thick = fullfile(surf_dir, ['rh.thickness.', subject_filename]);
 
 if exist(lh_thick, 'file') && exist(rh_thick, 'file')
@@ -253,10 +272,10 @@ else
     result.mean_gyri_global = NaN;
 end
 
-% 4. ROI EXTRACTION - Volume atlases (explizit definiert)
+% 4. ROI EXTRACTION - Volume atlases mit Vgm, Vwm, Vcsf
 roi_file = fullfile(label_dir, ['catROI_', subject_filename, '.xml']);
 
-% Liste der gewünschten Atlanten - muss mit CAT12 Konfiguration übereinstimmen
+% Liste der gewünschten Atlanten
 desired_atlases = {'neuromorphometrics', 'lpba40', 'cobra', 'suit'};
 
 if exist(roi_file, 'file')
@@ -268,7 +287,7 @@ if exist(roi_file, 'file')
             
             % Check if this atlas exists in the data
             if ~isfield(roi_data, atlas_name)
-                fprintf('Warning: Atlas %s not found in XML (möglicherweise nicht von CAT12 generiert)\n', atlas_name);
+                fprintf('Warning: Atlas %s not found in XML\n', atlas_name);
                 continue;
             end
             
@@ -295,13 +314,29 @@ if exist(roi_file, 'file')
                 continue;
             end
             
-            % Extract volumes (Vgm) - check both possible locations
-            if isfield(atlas_struct, 'data') && isfield(atlas_struct.data, 'Vgm')
-                roi_volumes = atlas_struct.data.Vgm;
+            % Extract volumes - Vgm, Vwm, Vcsf
+            roi_vgm = [];
+            roi_vwm = [];
+            roi_vcsf = [];
+            
+            if isfield(atlas_struct, 'data')
+                if isfield(atlas_struct.data, 'Vgm')
+                    roi_vgm = atlas_struct.data.Vgm;
+                end
+                if isfield(atlas_struct.data, 'Vwm')
+                    roi_vwm = atlas_struct.data.Vwm;
+                end
+                if isfield(atlas_struct.data, 'Vcsf')
+                    roi_vcsf = atlas_struct.data.Vcsf;
+                end
             elseif isfield(atlas_struct, 'Vgm')
-                roi_volumes = atlas_struct.Vgm;
-            else
-                roi_volumes = [];
+                roi_vgm = atlas_struct.Vgm;
+                if isfield(atlas_struct, 'Vwm')
+                    roi_vwm = atlas_struct.Vwm;
+                end
+                if isfield(atlas_struct, 'Vcsf')
+                    roi_vcsf = atlas_struct.Vcsf;
+                end
             end
             
             % Kürze Atlas-Namen für CSV
@@ -310,17 +345,29 @@ if exist(roi_file, 'file')
                 atlas_name_short = 'Neurom';
             end
             
-            % Add to result structure mit kürzerem Präfix
+            % Add to result structure
             for r = 1:length(roi_names)
                 roi_name = roi_names{r};
                 roi_name_clean = matlab.lang.makeValidName([atlas_name_short, '_', roi_name]);
                 
-                if r <= length(roi_volumes)
-                    result.(['V_', roi_name_clean]) = roi_volumes(r);
+                % Vgm (graue Substanz)
+                if r <= length(roi_vgm)
+                    result.(['Vgm_', roi_name_clean]) = roi_vgm(r);
+                end
+                
+                % Vwm (weiße Substanz)
+                if r <= length(roi_vwm)
+                    result.(['Vwm_', roi_name_clean]) = roi_vwm(r);
+                end
+                
+                % Vcsf (Liquor)
+                if r <= length(roi_vcsf)
+                    result.(['Vcsf_', roi_name_clean]) = roi_vcsf(r);
                 end
             end
             
-            fprintf('Extracted %s atlas (%d regions)\n', atlas_name, length(roi_names));
+            fprintf('Extracted %s atlas (%d regions, Vgm=%d, Vwm=%d, Vcsf=%d)\n', ...
+                atlas_name, length(roi_names), ~isempty(roi_vgm), ~isempty(roi_vwm), ~isempty(roi_vcsf));
         end
         
     catch ME
@@ -365,7 +412,7 @@ if exist(surface_roi_xml, 'file')
                 continue;
             end
             
-            % Extract thickness if available (mit kürzerem Präfix T_)
+            % Extract thickness if available
             if isfield(atlas_struct, 'data') && isfield(atlas_struct.data, 'thickness')
                 roi_thickness = atlas_struct.data.thickness;
                 
@@ -379,7 +426,7 @@ if exist(surface_roi_xml, 'file')
                 fprintf('Extracted %s thickness (%d regions)\n', atlas_name, length(roi_names));
             end
             
-            % Extract gyrification if available (mit kürzerem Präfix G_)
+            % Extract gyrification if available
             if isfield(atlas_struct, 'data') && isfield(atlas_struct.data, 'gyrification')
                 roi_gyri = atlas_struct.data.gyrification;
                 
