@@ -6,3 +6,6 @@ data_output/
 *.nii
 *.nii.gz
 output/logs/
+/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/new_hc_data/ds004856/
+/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/new_hc_data/SALD/
+saving_0881025/

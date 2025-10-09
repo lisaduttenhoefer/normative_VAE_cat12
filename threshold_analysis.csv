@@ -1,9 +1,0 @@
-Metric,Threshold,Count,Percentage
-SurfaceEulerNumber_rating,> 4.0,58,1.9%
-SurfaceEulerNumber_rating,> 5.0,18,0.6%
-ICR,> 1.0,122,4.0%
-ICR,> 1.5,2,0.1%
-NCR,> 0.20,1,0.0%
-NCR,> 0.25,0,0.0%
-IQR_rating,> 3.0,1,0.0%
-IQR_rating,> 3.5,0,0.0%

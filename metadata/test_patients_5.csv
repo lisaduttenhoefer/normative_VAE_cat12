@@ -1,6 +1,0 @@
-Filename,Dataset,Diagnosis,Age,Sex,Usage_original,Sex_int
-IXI426-IOP-1011-T1,IXI,HC,41.2,Female,training,0
-IXI571-IOP-1154-T1,IXI,HC,56.6,Female,training,0
-IXI170-Guys-0843-T1,IXI,HC,50.2,Female,training,0
-IXI054-Guys-0707-T1,IXI,HC,60.8,Female,training,0
-IXI196-Guys-0805-T1,IXI,HC,47.8,Female,training,0
