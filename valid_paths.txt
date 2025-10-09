@@ -1,5 +1,6 @@
+/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/new_hc_data/SALD/sub-031274_T1w.nii.gz
+/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/new_hc_data/SALD/sub-031275_T1w.nii.gz
 /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI170-Guys-0843-T1.nii
 /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI571-IOP-1154-T1.nii
-/net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI196-Guys-0805-T1.nii
-/net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI054-Guys-0707-T1.nii
-/net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI426-IOP-1011-T1.nii
+/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/new_hc_data/ds004856/sub-12_ses1_1_T1w.nii.gz
+/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/new_hc_data/ds004856/sub-164_ses1_1_T1w.nii.gz

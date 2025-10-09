@@ -22,6 +22,13 @@ fprintf('Output directory: %s\n', output_root);
 local_input = fullfile(output_root, [subject_filename, ext]);
 copyfile(subject_path, local_input);
 
+% Handle .nii.gz files: remove .nii extension from subject_filename for file matching
+% CAT12 creates output files without the .nii extension when input is .nii.gz
+if strcmp(ext, '.gz') && endsWith(subject_filename, '.nii')
+    subject_filename = subject_filename(1:end-4);  % Remove '.nii'
+    fprintf('Adjusted subject_filename for .nii.gz: %s\n', subject_filename);
+end
+
 % =========================================================================
 % BATCH 1: CAT12 SEGMENTATION
 % =========================================================================
@@ -69,14 +76,16 @@ matlabbatch{1}.spm.tools.cat.estwrite.output.jacobianwarped = 0;
 % Deformation fields
 matlabbatch{1}.spm.tools.cat.estwrite.output.warps = [1 0];
 
-% Nur die gewünschten Atlanten aktivieren
+% Volume-basierte Atlanten aktivieren
 matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.neuromorphometrics = 1;
 matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.lpba40 = 1;
 matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.cobra = 1;
+matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.suit = 1;
 matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.hammers = 0;
-matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.ibsr = 0;
+matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.ibsr = 1;
 matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.thalamus = 0;
-matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.ownatlas = {''};
+% AAL3 als eigener Atlas
+matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.ownatlas = {'/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/aal3.nii'};
 
 % =========================================================================
 % BATCH 2: EXTRACT SURFACE MEASURES (GYRIFICATION, etc.)
@@ -275,23 +284,39 @@ end
 % 4. ROI EXTRACTION - Volume atlases mit Vgm, Vwm, Vcsf
 roi_file = fullfile(label_dir, ['catROI_', subject_filename, '.xml']);
 
-% Liste der gewünschten Atlanten
-desired_atlases = {'neuromorphometrics', 'lpba40', 'cobra', 'suit'};
+% Liste der gewünschten Atlanten (AAL3 wird als 'aal3' in der XML erscheinen)
+desired_atlases = {'neuromorphometrics', 'lpba40', 'cobra', 'suit', 'ibsr', 'aal3'};
 
 if exist(roi_file, 'file')
     try
         roi_data = cat_io_xml(roi_file);
         
+        % Debug: Zeige alle verfügbaren Atlanten im XML
+        available_atlases = fieldnames(roi_data);
+        fprintf('Available atlases in XML: %s\n', strjoin(available_atlases, ', '));
+        
         for atlas_idx = 1:length(desired_atlases)
             atlas_name = desired_atlases{atlas_idx};
             
-            % Check if this atlas exists in the data
-            if ~isfield(roi_data, atlas_name)
-                fprintf('Warning: Atlas %s not found in XML\n', atlas_name);
+            % Versuche verschiedene Namensformate für den Atlas
+            possible_names = {atlas_name, strrep(atlas_name, '_', ''), lower(atlas_name), upper(atlas_name)};
+            atlas_found = false;
+            actual_atlas_name = '';
+            
+            for name_idx = 1:length(possible_names)
+                if isfield(roi_data, possible_names{name_idx})
+                    actual_atlas_name = possible_names{name_idx};
+                    atlas_found = true;
+                    break;
+                end
+            end
+            
+            if ~atlas_found
+                fprintf('Warning: Atlas %s not found in XML (tried: %s)\n', atlas_name, strjoin(possible_names, ', '));
                 continue;
             end
             
-            atlas_struct = roi_data.(atlas_name);
+            atlas_struct = roi_data.(actual_atlas_name);
             
             % Extract names - can be in different formats
             if isfield(atlas_struct, 'names')
@@ -343,6 +368,12 @@ if exist(roi_file, 'file')
             atlas_name_short = atlas_name;
             if strcmp(atlas_name, 'neuromorphometrics')
                 atlas_name_short = 'Neurom';
+            elseif strcmp(lower(atlas_name), 'aal3')
+                atlas_name_short = 'AAL3';
+            elseif strcmp(atlas_name, 'ibsr')
+                atlas_name_short = 'IBSR';
+            elseif strcmp(atlas_name, 'suit')
+                atlas_name_short = 'SUIT';
             end
             
             % Add to result structure
@@ -412,12 +443,20 @@ if exist(surface_roi_xml, 'file')
                 continue;
             end
             
+            % Kurznamen für die Surface-Atlanten
+            atlas_name_short = atlas_name;
+            if contains(atlas_name, 'DK40') || contains(atlas_name, 'aparc_DK40')
+                atlas_name_short = 'DK40';
+            elseif contains(atlas_name, 'a2009s') || contains(atlas_name, 'Destrieux')
+                atlas_name_short = 'Destrieux';
+            end
+            
             % Extract thickness if available
             if isfield(atlas_struct, 'data') && isfield(atlas_struct.data, 'thickness')
                 roi_thickness = atlas_struct.data.thickness;
                 
                 for r = 1:length(roi_names)
-                    roi_name_clean = matlab.lang.makeValidName([atlas_name, '_', roi_names{r}]);
+                    roi_name_clean = matlab.lang.makeValidName([atlas_name_short, '_', roi_names{r}]);
                     if r <= length(roi_thickness)
                         result.(['T_', roi_name_clean]) = roi_thickness(r);
                     end
@@ -431,13 +470,53 @@ if exist(surface_roi_xml, 'file')
                 roi_gyri = atlas_struct.data.gyrification;
                 
                 for r = 1:length(roi_names)
-                    roi_name_clean = matlab.lang.makeValidName([atlas_name, '_', roi_names{r}]);
+                    roi_name_clean = matlab.lang.makeValidName([atlas_name_short, '_', roi_names{r}]);
                     if r <= length(roi_gyri)
                         result.(['G_', roi_name_clean]) = roi_gyri(r);
                     end
                 end
                 
                 fprintf('Extracted %s gyrification (%d regions)\n', atlas_name, length(roi_names));
+            end
+            
+            % Extract VOLUMES if available (Vgm, Vwm, Vcsf)
+            % CAT12 kann diese für Surface-Atlanten bereitstellen
+            if isfield(atlas_struct, 'data')
+                % GM Volume
+                if isfield(atlas_struct.data, 'Vgm')
+                    roi_vgm = atlas_struct.data.Vgm;
+                    for r = 1:length(roi_names)
+                        roi_name_clean = matlab.lang.makeValidName([atlas_name_short, '_', roi_names{r}]);
+                        if r <= length(roi_vgm)
+                            result.(['Vgm_', roi_name_clean]) = roi_vgm(r);
+                        end
+                    end
+                    fprintf('Extracted %s Vgm volumes (%d regions)\n', atlas_name, length(roi_vgm));
+                end
+                
+                % WM Volume
+                if isfield(atlas_struct.data, 'Vwm')
+                    roi_vwm = atlas_struct.data.Vwm;
+                    for r = 1:length(roi_names)
+                        roi_name_clean = matlab.lang.makeValidName([atlas_name_short, '_', roi_names{r}]);
+                        if r <= length(roi_vwm)
+                            result.(['Vwm_', roi_name_clean]) = roi_vwm(r);
+                        end
+                    end
+                    fprintf('Extracted %s Vwm volumes (%d regions)\n', atlas_name, length(roi_vwm));
+                end
+                
+                % CSF Volume
+                if isfield(atlas_struct.data, 'Vcsf')
+                    roi_vcsf = atlas_struct.data.Vcsf;
+                    for r = 1:length(roi_names)
+                        roi_name_clean = matlab.lang.makeValidName([atlas_name_short, '_', roi_names{r}]);
+                        if r <= length(roi_vcsf)
+                            result.(['Vcsf_', roi_name_clean]) = roi_vcsf(r);
+                        end
+                    end
+                    fprintf('Extracted %s Vcsf volumes (%d regions)\n', atlas_name, length(roi_vcsf));
+                end
             end
         end
     catch ME

@@ -1,3 +1,8 @@
 /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/
 CAT12_newvals/data_output/
 data_output/
+/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/new_hc_data/
+data_output/
+*.nii
+*.nii.gz
+output/logs/

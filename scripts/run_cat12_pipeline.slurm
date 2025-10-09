@@ -11,7 +11,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=16G
-#SBATCH --array=1-5
+#SBATCH --array=1-10
 
 # Load MATLAB module
 module load math/matlab/R2022a
