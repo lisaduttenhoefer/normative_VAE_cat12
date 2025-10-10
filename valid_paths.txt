@@ -1,2 +1,0 @@
-/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/new_hc_data/SALD/sub-031326_T1w.nii.gz
-/net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI170-Guys-0843-T1.nii
