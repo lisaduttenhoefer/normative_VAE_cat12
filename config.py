@@ -33,11 +33,13 @@ SECONDARY_COHORT_FOLDERS = [
 
 # PRIORITÄT 3: Zusätzliche externe Pfade
 ADDITIONAL_SEARCH_PATHS = [
-    "/net/data.isilon/ag-cherrmann/flam/cat12/data/all_whitecat_gm_nii"
+    "/net/data.isilon/ag-cherrmann/flam/cat12/data/all_whitecat_gm_nii", #new wC files
+    "/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/new_hc_data/ds004856", #openNeuro files
+    "/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/new_hc_data/SALD" #SALD files
 ]
 
 # ANGEPASST: Pfad zu deinen Metadaten
-METADATA_PATHS = ["/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/metadata/complete_metadata.csv"]
+METADATA_PATHS = ["/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/metadata/complete_metadata_all.csv"]
 # Output-Pfad für valid_paths.txt
 OUTPUT_FILE = "/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/valid_paths_all_data.txt"
 # --------------------
@@ -90,9 +92,17 @@ def valid_patients(paths: list) -> list:
     print(f"Found {len(valid_list)} valid patient IDs from metadata")
     return valid_list
 
+def find_nii_files(directory: pathlib.Path) -> list:
+    """
+    Findet sowohl .nii als auch .nii.gz Dateien in einem Verzeichnis
+    """
+    nii_files = list(directory.glob("*.nii"))
+    nii_gz_files = list(directory.glob("*.nii.gz"))
+    return nii_files + nii_gz_files
+
 def get_valid_mri_paths(root_dir: str, primary_folders: list, secondary_folders: list, additional_paths: list, metadata_paths: list) -> tuple:
     """
-    Findet alle .nii Dateien in drei Phasen:
+    Findet alle .nii und .nii.gz Dateien in drei Phasen:
     1. PHASE 1: Suche in PRIMARY folders
     2. PHASE 2: Suche in SECONDARY folders nur für noch fehlende Patienten
     3. PHASE 3: Suche in ADDITIONAL paths nur für noch fehlende Patienten
@@ -114,8 +124,8 @@ def get_valid_mri_paths(root_dir: str, primary_folders: list, secondary_folders:
             print(f"WARNING: Cohort directory not found: {cohort_dir}")
             continue
         
-        all_mri_paths = list(cohort_dir.glob("*.nii"))
-        print(f"Scanning {cohort_name}: {len(all_mri_paths)} .nii files")
+        all_mri_paths = find_nii_files(cohort_dir)
+        print(f"Scanning {cohort_name}: {len(all_mri_paths)} .nii/.nii.gz files")
         
         for mri_path in all_mri_paths:
             mri_filename = mri_path.name
@@ -150,8 +160,8 @@ def get_valid_mri_paths(root_dir: str, primary_folders: list, secondary_folders:
                 print(f"WARNING: Cohort directory not found: {cohort_dir}")
                 continue
             
-            all_mri_paths = list(cohort_dir.glob("*.nii"))
-            print(f"Scanning {cohort_name}: {len(all_mri_paths)} .nii files")
+            all_mri_paths = find_nii_files(cohort_dir)
+            print(f"Scanning {cohort_name}: {len(all_mri_paths)} .nii/.nii.gz files")
             
             found_in_this_cohort = 0
             for mri_path in all_mri_paths:
@@ -193,8 +203,8 @@ def get_valid_mri_paths(root_dir: str, primary_folders: list, secondary_folders:
                 print(f"WARNING: Additional path not found: {additional_path}")
                 continue
             
-            all_mri_paths = list(additional_dir.glob("*.nii"))
-            print(f"Scanning {additional_dir.name}: {len(all_mri_paths)} .nii files")
+            all_mri_paths = find_nii_files(additional_dir)
+            print(f"Scanning {additional_dir.name}: {len(all_mri_paths)} .nii/.nii.gz files")
             
             found_in_this_path = 0
             for mri_path in all_mri_paths:

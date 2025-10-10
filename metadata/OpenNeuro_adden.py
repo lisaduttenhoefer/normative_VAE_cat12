@@ -11,7 +11,7 @@ import sys
 # CONFIGURATION
 # ============================================================================
 DS004856_TSV = "/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/new_hc_data/ds004856/participants.tsv"
-EXISTING_CSV = "/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/metadata/complete_metadata.csv"
+EXISTING_CSV = "/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/metadata/complete_metadata_all.csv"
 OUTPUT_CSV = "/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/metadata/complete_metadata_with_ds004856.csv"
 
 print("=" * 70)

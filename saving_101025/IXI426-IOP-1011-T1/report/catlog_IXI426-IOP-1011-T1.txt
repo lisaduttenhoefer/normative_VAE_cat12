@@ -1,0 +1,102 @@
+
+------------------------------------------------------------------------
+CAT12.9 r2577: 1/1:            ./IXI426-IOP-1011-T1/IXI426-IOP-1011-T1.n
+------------------------------------------------------------------------
+SANLM denoising (medium)                                             99s
+Affine preprocessing (APP)                                        
+  Initialize                                                         15s
+  Estimate background                                                35s
+  Initial correction                                                 18s
+  Refine background                                                  11s
+  Final correction                                                   15s
+  Final scaling                                                      22s
+                                                                    130s
+Correct center-of-mass                                                9s
+Affine registration                                                  41s
+SPM preprocessing 1 (estimate 1 - TPM registration):                174s
+SPM preprocessing 1 (estimate 2):                                   170s
+SPM preprocessing 2 (write)                                       
+  Write Segmentation                                                 43s
+  Update Segmentation                                                36s
+  Update Skull-Stripping                                             94s
+  Update probability maps                                            17s
+                                                                    191s
+Global intensity correction                                          32s
+SANLM denoising after intensity normalization (medium)               47s
+Fast Optimized Shooting registration                                  8s
+  138s
+Local adaptive segmentation (LASstr=0.50)                         
+  Prepare maps                                                       12s
+  Prepare partitions                                                  5s
+  Prepare segments (LASmod = 1.05)                                   42s
+  Estimate local tissue thresholds (WM)                              48s
+  Estimate local tissue thresholds (GM)                              53s
+  Intensity transformation                                            0s
+  SANLM denoising after LAS (medium)                                 59s
+                                                                    225s
+ROI segmentation (partitioning)                                   
+  Atlas -> subject space                                             24s
+  Major structures                                                   33s
+  Ventricle detection                                                26s
+  Blood vessel detection                                             22s
+  WMH detection (WMHCstr=0.49 > WMHCstr'=0.00)                       54s
+  Manual stroke lesion detection                                      0s
+  Closing of deep structures                                          4s
+  Side alignment                                                     10s
+  Final corrections                                                   6s
+                                                                    179s
+Apply enhanced blood vessel correction                                2s
+Amap using initial SPM12 segmentations (MRF filter strength 0.06)   121s
+    AMAP peaks: [CSF,GM,WM] = [0.36±0.05,0.68±0.08,0.98±0.05]
+Final cleanup (gcutstr=0.24)                                      
+  Level 1 cleanup (ROI estimation)                                   10s
+  Level 1 cleanup (brain masking)                                     8s
+  Level 2 cleanup (CSF correction)                                    4s
+  Level 3 cleanup (CSF/WM PVE)                                        5s
+                                                                     27s
+    7s
+Write result maps                                                    22s
+Surface and thickness estimation                                  
+lh:
+  Thickness estimation (0.50 mm³)                                   336s
+  Create initial surface                                            236s
+  Topology correction:                                              225s
+  Surface refinement:                                               201s
+  Reduction of surface collisions with optimization:                150s
+  Spherical mapping with areal smoothing                            209s
+  Spherical registration                                            451s
+rh:
+  Thickness estimation (0.50 mm³)                                   337s
+  Create initial surface                                            234s
+  Topology correction:                                              225s
+  Surface refinement:                                               217s
+  Reduction of surface collisions with optimization:                149s
+  Spherical mapping with areal smoothing                            213s
+  Spherical registration                                            473s
+Final surface processing results: 
+  Average thickness:                          2.6302 ± 0.5513 mm
+  Euler characteristic / defect size:         22 / 1.03%
+  Display thickness:          /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI426-IOP-1011-T1/surf/lh.thickness.IXI426-IOP-1011-T1
+  Display thickness:          /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI426-IOP-1011-T1/surf/rh.thickness.IXI426-IOP-1011-T1
+  Show surfaces in orthview:  /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI426-IOP-1011-T1/IXI426-IOP-1011-T1.nii
+Surface and thickness estimation takes                             3900s
+ROI estimation                                                    
+  ROI estimation of 'thalamic_nuclei' atlas                           7s
+  ROI estimation of 'cobra' atlas                                    28s
+  ROI estimation of 'neuromorphometrics' atlas                      100s
+  ROI estimation of 'lpba40' atlas                                   29s
+  ROI estimation of 'suit' atlas                                     15s
+  ROI estimation of 'ibsr' atlas                                     26s
+  ROI estimation of 'aal3' atlas                                     43s
+  Write results                                                      45s
+                                                                    252s
+Quality check                                                        19s
+
+------------------------------------------------------------------------
+CAT preprocessing takes 107 minute(s) and 49 second(s).
+Image Quality Rating (IQR):  86.06% (B)
+Segmentations are saved in /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI426-IOP-1011-T1/mri
+Reports are saved in /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI426-IOP-1011-T1/report
+Labels are saved in /net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/data_output/IXI426-IOP-1011-T1/label
+------------------------------------------------------------------------
+
