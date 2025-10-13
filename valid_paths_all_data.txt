@@ -1,5 +1,5 @@
-/net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI298-Guys-0861-T1.nii
 /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI445-HH-2269-T1.nii
+/net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI298-Guys-0861-T1.nii
 /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI363-HH-2050-T1.nii
 /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI375-Guys-0925-T1.nii
 /net/data.isilon/ag-cherrmann/stumrani/mri_prep/ixinii/IXI297-Guys-0886-T1.nii

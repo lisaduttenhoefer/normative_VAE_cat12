@@ -1,8 +1,8 @@
 #!/bin/bash
-### Job Parameters
-#SBATCH --job-name=cat12_batch
+### Job Parameters -> just leave them like this (expcept email-adress and last row)
+#SBATCH --job-name=cat12_batch_TEST
 #SBATCH --mail-user=lisa.duttenhoefer@stud.uni-heidelberg.de
-#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-type=FAIL
 #SBATCH --output=/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/output/logs/slurm_cat12_%A_%a.out
 #SBATCH --error=/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/output/logs/slurm_cat12_%A_%a.err
 #SBATCH --time=48:00:00
@@ -11,18 +11,19 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=12G
-#SBATCH --array=1-2
-%1-262%50
+#SBATCH --array=1-262%80   
+#note to array parameter: for testing : array=1-10 and batch_size unten auf 1 -> how many jobs you want (one patient per job for testing purposes -> so you see several results right away)
+#if you leave batch_size with 15 it will work on the patients one after the other which is not ideal for testing
 
 # Load MATLAB module
 module load math/matlab/R2022a
 
 # Define paths
-PROJECT_ROOT="/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals"
-VALID_PATHS_FILE="$PROJECT_ROOT/valid_paths_all_data.txt"
-log_path="$PROJECT_ROOT/output/logs"
-matlab_script="$PROJECT_ROOT/scripts/run_cat12_full_pipeline.m"
-output_root_path="$PROJECT_ROOT/data_output"
+PROJECT_ROOT="/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals" 
+VALID_PATHS_FILE="$PROJECT_ROOT/valid_paths_all_data.txt" #this is the full metadata file with ALL patients, change to valid_paths.txt for testing 
+log_path="$PROJECT_ROOT/output/logs" # .log and .out files stay here for better overview during the processing, can be copied later
+matlab_script="$PROJECT_ROOT/scripts/run_cat12_full_pipeline.m" #important MAIN SCRIPT
+output_root_path="/net/bq-storage/ag-cherrmann/projects/35_BrainMRI/CAT12/data_output" #where output (big) gets stored, for testing you cna change it to (CAT12_newvals/data_output/)
 
 # Create directories if they don't exist
 mkdir -p "$log_path"
@@ -31,7 +32,7 @@ mkdir -p "$output_root_path"
 # Calculate total number of subjects and batching parameters
 total_subjects=$(wc -l < "$VALID_PATHS_FILE")
 batch_size=15  # Process 15 subjects per array job (15 × 2.5h = ~37.5h, safe under 48h limit)
-max_array_size=200  # Maximum number of array jobs (3000/15 = 200)
+max_array_size=300  # Maximum number of array jobs (4000/15 = 266) 
 
 # Check if we have subjects
 if [ "$total_subjects" -eq 0 ]; then
@@ -41,10 +42,10 @@ fi
 
 echo "========================================="
 echo "Total subjects to process: $total_subjects"
-echo "Batch size: $batch_size subjects per job (~22-25h per job)"
+echo "Batch size: $batch_size subjects per job"
 echo "Total jobs needed: $((total_subjects / batch_size + 1))"
 echo "Array Task ID: $SLURM_ARRAY_TASK_ID"
-echo "Estimated total runtime: ~5 days with 50 parallel jobs"
+echo "let's gooo!!"
 echo "========================================="
 
 # Calculate start and end indices for this batch
@@ -72,7 +73,7 @@ for (( i=start_index; i<=end_index; i++ )); do
     # Skip if subject is empty
     [ -z "$subject_nifti" ] && continue
     
-    # Extract subject name (remove all extensions properly)
+    # Extract subject name (remove all extensions properly) -> different files ((non-)compressed) depending on dataset
     subject_name=$(basename "$subject_nifti")
     subject_name="${subject_name%.nii.gz}"  # Entferne .nii.gz
     subject_name="${subject_name%.nii}"     # Falls nur .nii
@@ -129,6 +130,18 @@ echo ""
 echo "========================================="
 echo "Batch $SLURM_ARRAY_TASK_ID completed"
 echo "Processed subjects $start_index to $end_index"
-echo "========================================="
-
-exit 0
+echo ""
+echo "       *        *    |    *"
+echo "          *        /   \\       *"
+echo "       *     *   /  _  \\   *    *"
+echo "                |.O   ..|      *"
+echo "          *     |  ._.  |"
+echo "             *  |       |  *      *"
+echo "       *         ' |  |  | '         *"
+echo "                /  |  |  |  \\          *"
+echo "       *       |',__|__|__,'.|"
+echo "                                  °"
+echo ""
+echo "            15 PATIENTS DONE! "
+echo ""
+exit

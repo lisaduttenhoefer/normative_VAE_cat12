@@ -51,10 +51,10 @@ matlabbatch{1}.spm.tools.cat.estwrite.extopts.registration.shooting.shootingtpm 
 matlabbatch{1}.spm.tools.cat.estwrite.extopts.registration.shooting.regstr = 0.5;
 matlabbatch{1}.spm.tools.cat.estwrite.extopts.vox = 1.5;
 
-% Surface outputs
+% Surface outputs (important if u want to extract anything surface related)
 matlabbatch{1}.spm.tools.cat.estwrite.output.surface = 1;
 
-% Volume outputs
+% Volume outputs (normal volumes)
 matlabbatch{1}.spm.tools.cat.estwrite.output.GM.native = 1;
 matlabbatch{1}.spm.tools.cat.estwrite.output.GM.mod = 1;
 matlabbatch{1}.spm.tools.cat.estwrite.output.GM.dartel = 0;
@@ -79,7 +79,7 @@ matlabbatch{1}.spm.tools.cat.estwrite.output.jacobianwarped = 0;
 % Deformation fields
 matlabbatch{1}.spm.tools.cat.estwrite.output.warps = [1 0];
 
-% Volume-basierte Atlanten aktivieren
+% Volume-basierte Atlanten aktivieren (1 aktiviert, o deaktiviert)
 matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.neuromorphometrics = 1;
 matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.lpba40 = 1;
 matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.cobra = 1;
@@ -88,10 +88,10 @@ matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.hammers = 0;
 matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.ibsr = 1;
 matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.thalamus = 0;
 
-% AAL3 und Schaefer-Atlanten als eigene Atlanten
+% AAL3 und Schaefer-Atlanten als eigene Atlanten -> we have the parcellation files but not in an "official" form, so we use them as "own atlases"
 matlabbatch{1}.spm.tools.cat.estwrite.output.ROImenu.atlases.ownatlas = {
     '/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/aal3.nii'
-    '/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Schaefer2018_400Parcels_17Networks_order.nii'
+    '/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Schaefer2018_200Parcels_17Networks_order.nii'
     '/net/data.isilon/ag-cherrmann/stumrani/caton/spm12/toolbox/cat12/templates_MNI152NLin2009cAsym/Schaefer2018_100Parcels_17Networks_order.nii'
 };
 
@@ -119,6 +119,7 @@ end
 % SURFACE ROI EXTRACTION
 % =========================================================================
 fprintf('\n=== Running surface ROI extraction ===\n');
+%searches through preprocessing files for the files it needs
 
 % Check both possible directory structures
 % Option 1: Flat structure (all files directly in output_root)
@@ -293,7 +294,7 @@ end
 roi_file = fullfile(label_dir, ['catROI_', subject_filename, '.xml']);
 
 % Liste der gewünschten Atlanten (inkl. beide Schaefer-Versionen)
-desired_atlases = {'neuromorphometrics', 'lpba40', 'cobra', 'suit', 'ibsr', 'aal3', 'Schaefer2018_100Parcels_17Networks_order', 'Schaefer2018_400Parcels_17Networks_order'};
+desired_atlases = {'neuromorphometrics', 'lpba40', 'cobra', 'suit', 'ibsr', 'aal3', 'Schaefer2018_100Parcels_17Networks_order', 'Schaefer2018_200Parcels_17Networks_order'};
 
 if exist(roi_file, 'file')
     try
@@ -386,9 +387,9 @@ if exist(roi_file, 'file')
             elseif strcmp(atlas_name, 'suit')
                 atlas_name_short = 'SUIT';
             elseif contains(lower(atlas_name), 'schaefer') && contains(lower(atlas_name), '100')
-                atlas_name_short = 'Schaefer100';
-            elseif contains(lower(atlas_name), 'schaefer') && contains(lower(atlas_name), '400')
-                atlas_name_short = 'Schaefer400';
+                atlas_name_short = 'Sch100';
+            elseif contains(lower(atlas_name), 'schaefer') && contains(lower(atlas_name), '200')
+                atlas_name_short = 'Sch200';
             end
             
             % Add to result structure
@@ -458,14 +459,18 @@ if exist(surface_roi_xml, 'file')
                 continue;
             end
             
-            % Kurznamen für die Surface-Atlanten
+            % Kurznamen für die Surface-Atlanten -> MATLAB hat 63-Zeichen-Grenze 
             atlas_name_short = atlas_name;
             if contains(atlas_name, 'DK40') || contains(atlas_name, 'aparc_DK40')
                 atlas_name_short = 'DK40';
             elseif contains(atlas_name, 'a2009s') || contains(atlas_name, 'Destrieux')
                 atlas_name_short = 'Destrieux';
+            elseif contains(atlas_name, 'Schaefer') && contains(atlas_name, '200')
+                atlas_name_short = 'Sch200';
+            elseif contains(atlas_name, 'Schaefer') && contains(atlas_name, '100')
+                atlas_name_short = 'Sch100';
             elseif contains(atlas_name, 'Schaefer')
-                atlas_name_short = 'Schaefer400';
+                atlas_name_short = 'Sch';
             end
             
             % Extract thickness if available
@@ -544,7 +549,7 @@ else
     fprintf('Warning: Surface ROI file not found: %s\n', surface_roi_xml);
 end
 
-% 6. SAVE TO CSV
+% 6. SAVE TO CSV (one csv per patient)
 output_csv = fullfile(output_root, [subject_filename, '_cat12_results.csv']);
 result_table = struct2table(result);
 try
@@ -556,37 +561,10 @@ catch ME
     disp(getReport(ME));
 end
 
-% 7. SAVE SCHAEFER DATA TO SEPARATE CSV
-fprintf('\n=== Extracting Schaefer data for separate CSV ===\n');
-result_fields = fieldnames(result);
-schaefer_result = struct();
-schaefer_result.Subject = subject_filename;
-
-% Extract only Schaefer-related fields
-for i = 1:length(result_fields)
-    field_name = result_fields{i};
-    % Check if field contains Schaefer100 or Schaefer400
-    if contains(field_name, 'Schaefer100') || contains(field_name, 'Schaefer400')
-        schaefer_result.(field_name) = result.(field_name);
-    end
-end
-
-% Save Schaefer data to separate CSV
-output_csv_schaefer = fullfile(output_root, [subject_filename, '_cat12_schaefer.csv']);
-schaefer_table = struct2table(schaefer_result);
-try
-    writetable(schaefer_table, output_csv_schaefer);
-    fprintf('Schaefer results saved to: %s\n', output_csv_schaefer);
-    fprintf('Total Schaefer columns in CSV: %d\n', width(schaefer_table));
-catch ME
-    fprintf('Error saving Schaefer CSV: %s\n', ME.message);
-    disp(getReport(ME));
-end
-
 fprintf('\n=== CAT12 surface analysis and ROI extraction completed successfully ===\n');
 
 % =========================================================================
-% CLEANUP: Reduce storage while keeping surfaces for future analyses
+% CLEANUP: Reduce storage while keeping surfaces for future analyses 
 % =========================================================================
 fprintf('\n=== Cleaning up to save storage ===\n');
 
@@ -599,8 +577,8 @@ fprintf('Deleted inverse deformation fields\n');
 
 % KEEP: Forward deformation fields (y_*.nii) for potential future normalization needs
 
-% 2. COMPRESS: Segmented volumes (keep for reference, but compress)
-fprintf('Compressing segmented volumes...\n');
+% 2. COMPRESS: Segmented volumes (keep for reference, but compress) -> takes only ~1sec more patient in reprocessing
+fprintf('Compressing segmented volumes...\n')
 volume_patterns = {'p0*.nii', 'p1*.nii', 'p2*.nii', 'mwp1*.nii', 'mwp2*.nii', 'wm*.nii'};
 for i = 1:length(volume_patterns)
     volume_files = dir(fullfile(output_root, volume_patterns{i}));
@@ -633,8 +611,4 @@ fprintf('DELETED:\n');
 fprintf('  - Inverse deformation fields (iy_*.nii) - rarely needed\n');
 fprintf('COMPRESSED:\n');
 fprintf('  - Segmented volumes (p0, p1, p2, mwp* files)\n');
-fprintf('\nEstimated storage per subject: ~200-250 MB\n');
-fprintf('For 3000 subjects: ~600-750 GB\n');
-fprintf('\nThis keeps almost all CAT12 outputs for future re-analysis!\n');
-
 exit(0);
