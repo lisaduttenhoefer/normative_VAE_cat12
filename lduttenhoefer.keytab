@@ -1,0 +1,6 @@
+ktutil
+ktutil: add_entry -password -p bq_lduttenhofer@BIOQUANT.UNI-HEIDELBERG.DE -k 1 -e aes256-cts-hmac-sha1-96
+Password: 1IronMan2404
+ktutil: write_kt ~/.lduttenhoefer.keytab
+ktutil: quit
+chmod 600 ~/.lduttenhoefer.keytab

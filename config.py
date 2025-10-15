@@ -34,8 +34,8 @@ SECONDARY_COHORT_FOLDERS = [
 # PRIORITÄT 3: Zusätzliche externe Pfade
 ADDITIONAL_SEARCH_PATHS = [
     "/net/data.isilon/ag-cherrmann/flam/cat12/data/all_whitecat_gm_nii", #new wC files
-    "/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/new_hc_data/ds004856", #openNeuro files
-    "/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/new_hc_data/SALD" #SALD files
+    "/net/bq-storage/ag-cherrmann/projects/35_BrainMRI/raw_mri_files/openneuro", #openNeuro files
+    "/net/bq-storage/ag-cherrmann/projects/35_BrainMRI/raw_mri_files/sald" #SALD files
 ]
 
 # ANGEPASST: Pfad zu deinen Metadaten

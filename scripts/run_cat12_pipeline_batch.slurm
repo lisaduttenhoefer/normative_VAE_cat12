@@ -1,6 +1,6 @@
 #!/bin/bash
 ### Job Parameters -> just leave them like this (expcept email-adress and last row)
-#SBATCH --job-name=cat12_batch_TEST
+#SBATCH --job-name=cat12_batch_reprocess2
 #SBATCH --mail-user=lisa.duttenhoefer@stud.uni-heidelberg.de
 #SBATCH --mail-type=FAIL
 #SBATCH --output=/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals/output/logs/slurm_cat12_%A_%a.out
@@ -11,7 +11,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=12G
-#SBATCH --array=1-262%80   
+#SBATCH --array=1-162%80   
 #note to array parameter: for testing : array=1-10 and batch_size unten auf 1 -> how many jobs you want (one patient per job for testing purposes -> so you see several results right away)
 #if you leave batch_size with 15 it will work on the patients one after the other which is not ideal for testing
 
@@ -20,10 +20,14 @@ module load math/matlab/R2022a
 
 # Define paths
 PROJECT_ROOT="/net/data.isilon/ag-cherrmann/lduttenhoefer/project/CAT12_newvals" 
-VALID_PATHS_FILE="$PROJECT_ROOT/valid_paths_all_data.txt" #this is the full metadata file with ALL patients, change to valid_paths.txt for testing 
+VALID_PATHS_FILE="$PROJECT_ROOT/reprocess_subjects.txt" #this is the full metadata file with ALL patients, change to valid_paths.txt for testing 
 log_path="$PROJECT_ROOT/output/logs" # .log and .out files stay here for better overview during the processing, can be copied later
 matlab_script="$PROJECT_ROOT/scripts/run_cat12_full_pipeline.m" #important MAIN SCRIPT
 output_root_path="/net/bq-storage/ag-cherrmann/projects/35_BrainMRI/CAT12/data_output" #where output (big) gets stored, for testing you cna change it to (CAT12_newvals/data_output/)
+
+kinit -R -kt ~/.lduttenhoefer.keytab bq_lduttenhofer@BIOQUANT.UNI-HEIDELBERG.DE || \
+kinit -kt ~/.lduttenhoefer.keytab bq_lduttenhofer@BIOQUANT.UNI-HEIDELBERG.DE
+klist
 
 # Create directories if they don't exist
 mkdir -p "$log_path"
